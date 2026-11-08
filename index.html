@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>הטעימות שלי: יומן טעימות לתינוק</title>
-<meta name="description" content="יומן טעימות לתינוק בעברית: מה נתת, מתי, כמה וכמה פעמים. בחינם, בלי הרשמה, הכול נשמר רק בטלפון שלך. מעקב בלבד, לא המלצה רפואית.">
+<title>הטעימות שלי: יומן מעקב טעימות לתינוק</title>
+<meta name="description" content="יומן מעקב טעימות לתינוק בעברית: מה נתת, מתי, כמה וכמה פעמים. בחינם, בלי הרשמה, הכול נשמר רק בטלפון שלך. מעקב בלבד, לא המלצה רפואית.">
 <link rel="canonical" href="https://avitalshuster.github.io/hateimot-sheli/">
 <meta name="theme-color" content="#f2f5ef" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#171b15" media="(prefers-color-scheme: dark)">
@@ -14,8 +14,8 @@
 <meta name="apple-mobile-web-app-title" content="הטעימות שלי">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="he_IL">
-<meta property="og:title" content="הטעימות שלי: יומן טעימות לתינוק">
-<meta property="og:description" content="יומן טעימות לתינוק בעברית: מה נתת, מתי, כמה וכמה פעמים. בחינם, בלי הרשמה, הכול נשמר רק בטלפון שלך. מעקב בלבד, לא המלצה רפואית.">
+<meta property="og:title" content="הטעימות שלי: יומן מעקב טעימות לתינוק">
+<meta property="og:description" content="יומן מעקב טעימות לתינוק בעברית: מה נתת, מתי, כמה וכמה פעמים. בחינם, בלי הרשמה, הכול נשמר רק בטלפון שלך. מעקב בלבד, לא המלצה רפואית.">
 <meta property="og:image" content="https://avitalshuster.github.io/hateimot-sheli/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -113,6 +113,7 @@ if ("serviceWorker" in navigator) {
   --ink: #23291f;
   --muted: #5e6858;
   --line: #dde5d6;
+  --grid: #b9c5af;        /* table lines that must show */
   --spoon: #8fae7e;       /* pea green: a dot that got filled */
   --spoon-empty: #dbe5d3;
   --accent: #b9503a;      /* peach-coral: the one action */
@@ -127,13 +128,13 @@ if ("serviceWorker" in navigator) {
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --ground: #171b15; --surface: #20261d; --ink: #eaf0e5; --muted: #a7b29f; --line: #343d2f;
+    --ground: #171b15; --surface: #20261d; --ink: #eaf0e5; --muted: #a7b29f; --line: #343d2f; --grid: #56634d;
     --spoon: #a3c290; --spoon-empty: #3a4534; --accent: #f09a7a; --accent-ink: #2a1610;
     --flag: #e8a96a; --flag-bg: #3a2e22; --focus: #8fb4ff; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --ground: #171b15; --surface: #20261d; --ink: #eaf0e5; --muted: #a7b29f; --line: #343d2f;
+  --ground: #171b15; --surface: #20261d; --ink: #eaf0e5; --muted: #a7b29f; --line: #343d2f; --grid: #56634d;
   --spoon: #a3c290; --spoon-empty: #3a4534; --accent: #f09a7a; --accent-ink: #2a1610;
   --flag: #e8a96a; --flag-bg: #3a2e22; --focus: #8fb4ff; color-scheme: dark;
 }
@@ -291,14 +292,22 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .pv-head h2 { font-size: 26px; }
 .pv-head p { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
 .pv-demo { font-size: 14px; color: var(--muted); margin: 0; }
-.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r2); background: var(--surface); }
-table.log { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 14px; }
-.log th, .log td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: start; vertical-align: top; }
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--grid); border-radius: var(--r2); background: var(--surface); }
+table.log { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 14px; table-layout: fixed; }
+.log th, .log td { border: 1px solid var(--grid); padding: 6px 8px; text-align: start; vertical-align: top; }
+.log col.name { width: 16%; }
+.log .slot { display: grid; gap: 4px; }
+.log .slot > span { display: flex; align-items: flex-end; gap: 4px; }
+.log .slot .l { flex: none; font-size: 11px; color: var(--muted); }
+.log .slot .v { flex: 1; min-width: 0; min-height: 1.4em; border-bottom: 1px dotted var(--grid); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.log .slot > span.nw { display: grid; gap: 2px; align-items: start; }
+.log .slot .v.note { border-bottom: 0; line-height: 1.4em; min-height: 4.2em;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.4em - 1px), var(--grid) calc(1.4em - 1px), var(--grid) 1.4em); }
+.log .more { display: block; font-size: 11px; font-weight: 400; color: var(--muted); }
 .log thead th { font-size: 13px; color: var(--muted); font-weight: 700; background: var(--ground); }
 .log tbody th.cat { background: var(--ground); font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--ink); }
 .log td.n { font-variant-numeric: tabular-nums; }
-.log tr.blank td { height: 34px; }
-.log td.ticks { letter-spacing: 4px; color: var(--muted); white-space: nowrap; }
+
 .seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; justify-self: start; }
 .seg label { position: relative; display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 15px; cursor: pointer; }
 .seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
@@ -323,11 +332,17 @@ table.log { border-collapse: collapse; width: 100%; min-width: 620px; font-size:
   @page { size: A4; margin: 12mm; }
   body { background: #fff; color: #000; padding: 0; font-size: 12px; }
   body::before, .wrap, .pv-actions, .pv-demo, .seg, .toast, dialog { display: none !important; }
-  .log td.ticks { color: #000; }
+  .log .slot .l, .log .more { color: #333; }
+  .log .slot .v { border-bottom-color: #bbb; }
   .pv { display: grid !important; max-width: none; }
   .tbl-wrap { overflow: visible; border: 0; }
   table.log { min-width: 0; font-size: 11px; }
-  .log th, .log td, .log thead th { border: 1px solid #999; padding: 4px 6px; color: #000; }
+  .log th, .log td, .log thead th { border: 1px solid #888; padding: 3px 5px; color: #000; }
+  .log .slot { gap: 2px; }
+  .log .slot .l { font-size: 9px; }
+  .log .slot .v { min-height: 1.3em; }
+  .log .slot .v.note { line-height: 1.25em; min-height: 3.75em; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    background: repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.25em - 1px), #bbb calc(1.25em - 1px), #bbb 1.25em); }
   .log thead th, .log tbody th.cat { background: #eee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .log tr { break-inside: avoid; }
   .pv-head p { color: #000; }
@@ -390,7 +405,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
       </svg>
     <h1>הטעימות שלי</h1>
   </div>
-  <p>יומן טעימות לתינוק. האתר פתוח למי שקיבלה קוד כניסה.</p>
+  <p>יומן מעקב טעימות לתינוק. האתר פתוח למי שקיבלה קוד כניסה.</p>
   <form id="gateForm" novalidate>
     <label for="gateCode">קוד כניסה</label>
     <input id="gateCode" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="TAAM-XXXXX" maxlength="20" aria-describedby="gateErr">
@@ -541,7 +556,8 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
   </div>
   <div class="tbl-wrap">
     <table class="log">
-      <thead><tr><th scope="col">מאכל</th><th scope="col">פעם ראשונה</th><th scope="col">כמות בפעם הראשונה</th><th scope="col">כמה פעמים</th><th scope="col">פעם אחרונה</th><th scope="col">תגובה / הערות</th></tr></thead>
+      <colgroup><col class="name"><col><col><col><col><col></colgroup>
+      <thead><tr><th scope="col">מאכל</th><th scope="col">פעם 1</th><th scope="col">פעם 2</th><th scope="col">פעם 3</th><th scope="col">פעם 4</th><th scope="col">פעם 5</th></tr></thead>
       <tbody id="pvBody"></tbody>
     </table>
   </div>
@@ -677,7 +693,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
     </dl>
     <form id="entryForm">
       <fieldset>
-        <legend>רישום פעם חדשה</legend>
+        <legend id="eLegend">רישום פעם חדשה</legend>
         <div class="field">
           <label for="eDate">תאריך</label>
           <input id="eDate" type="date" required>
@@ -699,7 +715,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
           <label for="eNote">הערה (לא חובה)</label>
           <textarea id="eNote" maxlength="300" placeholder="למשל: מעורבב בבטטה, אהב/ה מאוד"></textarea>
         </div>
-        <button class="save" type="submit">שמירה</button>
+        <button class="save" type="submit" id="eSave">שמירה</button>
       </fieldset>
     </form>
     <div>
@@ -786,6 +802,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
     { id: "meh", label: "ככה ככה" },
     { id: "no", label: "לא אהב/ה" }
   ];
+  /* storage names keep the first working title on purpose: changing them would lose what people already recorded */
   var KEY = "bis-rishon:v2", KEY_OLD = "bis-rishon:v1";
   function likeLabel(id) { var l = LIKE.filter(function (x) { return x.id === id; })[0]; return l ? l.label : ""; }
 
@@ -1035,13 +1052,11 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
     t.textContent = givenToday ? "✓ היום" : "+ נתתי היום";
     t.setAttribute("aria-label", t.textContent + ": " + name);
     t.addEventListener("click", function () {
-      if (givenToday) { openSheet(name); return; }
-      (state.entries[name] = state.entries[name] || []).push({ date: todayIso(), amount: "", react: "none", like: "", note: "" });
-      persist();
-      var fresh = row(name); li.replaceWith(fresh);
-      renderSummary(); renderBackup(); refreshCount(catOf(name));
-      fresh.querySelector(".today").focus();
-      toast("נרשם: " + name + " היום");
+      if (givenToday) {
+        var todays = (state.entries[name] || []).filter(function (e) { return e.date === todayIso(); });
+        openSheet(name, todays[todays.length - 1]); return;
+      }
+      openSheet(name);
     });
     li.appendChild(open); li.appendChild(t);
     return li;
@@ -1240,6 +1255,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
       del.addEventListener("click", function () {
         var arr = state.entries[current]; var i = arr.indexOf(e);
         if (i !== -1) arr.splice(i, 1);
+        if (editing === e) resetForm();
         if (e.meal) {
           var food = current;
           state.meals.forEach(function (m) { if (m.id === e.meal) m.foods = m.foods.filter(function (f) { return f !== food; }); });
@@ -1247,19 +1263,36 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
         }
         persist(); renderAll(); toast("נמחק");
       });
-      li.appendChild(d); li.appendChild(del); h.appendChild(li);
+      var edit = document.createElement("button"); edit.type = "button"; edit.className = "del"; edit.textContent = "עריכה";
+      edit.setAttribute("aria-label", "עריכה: הרישום מ-" + fmtDate(e.date));
+      edit.addEventListener("click", function () { startEdit(e); el("eDate").focus(); el("entryForm").scrollIntoView({ block: "start", behavior: "smooth" }); });
+      var acts = document.createElement("span"); acts.style.display = "flex"; acts.style.gap = "8px"; acts.style.flex = "none";
+      acts.appendChild(edit); acts.appendChild(del);
+      li.appendChild(d); li.appendChild(acts); h.appendChild(li);
     });
   }
-  function openSheet(name) {
-    current = name; chosenReact = "none"; chosenLike = "";
-    el("eDate").value = todayIso(); el("eDate").max = todayIso();
-    el("eAmount").value = ""; el("eNote").value = "";
-    renderReact(); renderLike(); renderAmounts(); renderSheet();
+  var editing = null;   /* the tasting being edited, or null for a new one */
+  function resetForm() {
+    editing = null; chosenReact = "none"; chosenLike = "";
+    el("eDate").value = todayIso(); el("eAmount").value = ""; el("eNote").value = "";
+    el("eLegend").textContent = "רישום פעם חדשה"; el("eSave").textContent = "שמירה";
+    renderReact(); renderLike(); renderAmounts();
+  }
+  function startEdit(e) {
+    editing = e; chosenReact = e.react; chosenLike = e.like || "";
+    el("eDate").value = e.date; el("eAmount").value = e.amount || ""; el("eNote").value = e.note || "";
+    el("eLegend").textContent = "עריכת הפעם מ-" + fmtDate(e.date); el("eSave").textContent = "שמירת השינויים";
+    renderReact(); renderLike(); renderAmounts();
+  }
+  function openSheet(name, editEntry) {
+    current = name; el("eDate").max = todayIso();
+    if (editEntry) startEdit(editEntry); else resetForm();
+    renderSheet();
     var d = el("sheet");
     if (d.showModal) d.showModal(); else d.setAttribute("open", "");
   }
   function closeSheet() { var d = el("sheet"); if (d.close) d.close(); else d.removeAttribute("open"); }
-  el("sheet").addEventListener("close", function () { current = null; resetRemoveOwn(); });
+  el("sheet").addEventListener("close", function () { current = null; editing = null; resetRemoveOwn(); });
   var removeArmed = null;
   function resetRemoveOwn() { clearTimeout(removeArmed); removeArmed = null; el("removeOwn").textContent = "הסרה מהמאכלים שלי"; }
   el("removeOwn").addEventListener("click", function () {
@@ -1281,10 +1314,13 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
   el("eAmount").addEventListener("input", renderAmounts);
   el("entryForm").addEventListener("submit", function (ev) {
     ev.preventDefault();
-    var date = el("eDate").value || todayIso();
-    add(current, { date: date, amount: el("eAmount").value.trim(), react: chosenReact, like: chosenLike, note: el("eNote").value.trim() });
-    el("eAmount").value = ""; el("eNote").value = ""; chosenReact = "none"; chosenLike = ""; renderReact(); renderLike(); renderAmounts();
-    toast("נשמר");
+    var date = el("eDate").value || todayIso(), name = current;
+    var fields = { date: date, amount: el("eAmount").value.trim(), react: chosenReact, like: chosenLike, note: el("eNote").value.trim() };
+    var wasEdit = !!editing;
+    if (editing) { Object.keys(fields).forEach(function (k) { editing[k] = fields[k]; }); }
+    else (state.entries[name] = state.entries[name] || []).push(fields);
+    persist(); closeSheet(); renderAll();
+    toast(wasEdit ? "השינויים נשמרו: " + name : "נרשם: " + name + (date === todayIso() ? " היום" : " ב-" + fmtDate(date)));
   });
 
   /* meal: several foods logged at once */
@@ -1416,15 +1452,31 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
   /* printable table */
   function fullDate(s) { var p = s.split("-"); return p[2] + "." + p[1] + "." + p[0].slice(2); }
   function td(tr, text, cls) { var c = document.createElement("td"); c.textContent = text; if (cls) c.className = cls; tr.appendChild(c); }
+  /* each row: the food, then 5 times; every time has a date and, under it, amount / notes */
+  var TIMES = 5;
+  function slot(tr, date, note) {
+    var c = document.createElement("td"); var w = document.createElement("div"); w.className = "slot";
+    w.innerHTML = '<span><span class="l">תאריך</span><span class="v"></span></span><span class="nw"><span class="l">כמות / הערות</span><span class="v note"></span></span>';
+    var v = w.querySelectorAll(".v"); v[0].textContent = date || ""; v[1].textContent = note || "";
+    c.appendChild(w); tr.appendChild(c);
+  }
+  function nameCell(tr, name, more) {
+    var th = document.createElement("th"); th.scope = "row"; th.textContent = name;
+    if (more) { var m = document.createElement("span"); m.className = "more"; m.textContent = more; th.appendChild(m); }
+    tr.appendChild(th);
+  }
   function blankRow(body, name) {
-    var tr = document.createElement("tr"); tr.className = "blank";
-    var nameCell = document.createElement("th"); nameCell.scope = "row"; nameCell.textContent = name; tr.appendChild(nameCell);
-    td(tr, ""); td(tr, ""); td(tr, "○○○○○○", "ticks"); td(tr, ""); td(tr, "");
+    var tr = document.createElement("tr"); nameCell(tr, name);
+    for (var i = 0; i < TIMES; i++) slot(tr, "", "");
     body.appendChild(tr);
   }
   function catRow(body, label) {
     var hr = document.createElement("tr"); var th = document.createElement("th");
-    th.colSpan = 6; th.className = "cat"; th.scope = "colgroup"; th.textContent = label; hr.appendChild(th); body.appendChild(hr);
+    th.colSpan = TIMES + 1; th.className = "cat"; th.scope = "colgroup"; th.textContent = label; hr.appendChild(th); body.appendChild(hr);
+  }
+  function entryNote(e) {
+    var r = REACT.filter(function (x) { return x.id === e.react; })[0];
+    return [e.amount, e.react !== "none" && r ? r.label : "", likeLabel(e.like), e.note].filter(Boolean).join(", ");
   }
   function renderPrint() {
     var empty = el("pvEmpty").checked;
@@ -1432,7 +1484,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
     el("pvTitle").textContent = empty
       ? (name ? "טבלת הטעימות של " + name : "טבלת טעימות")
       : (name ? "יומן הטעימות של " + name : "יומן טעימות");
-    el("pvDate").textContent = empty ? (name ? "" : "שם: ________________   ") + "בכל פעם שנותנים, מסמנים עיגול בעמודה ׳כמה פעמים׳." : "הודפס ב-" + fullDate(todayIso());
+    el("pvDate").textContent = empty ? (name ? "" : "שם: ________________   ") + "בכל פעם שנותנים, ממלאים משבצת: תאריך, ומתחתיו כמות והערות." : "הודפס ב-" + fullDate(todayIso());
     var body = el("pvBody"); body.textContent = "";
     if (empty) {
       CATS.forEach(function (c) {
@@ -1450,19 +1502,20 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
       if (!foods.length) return;
       catRow(body, c.label);
       foods.forEach(function (n) {
-        var l = entriesOf(n); var tr = document.createElement("tr");
-        var nameCell = document.createElement("th"); nameCell.scope = "row"; nameCell.textContent = n; tr.appendChild(nameCell);
-        var notes = l.filter(function (e) { return e.react !== "none" || e.note || e.like; }).map(function (e) {
-          var r = REACT.filter(function (x) { return x.id === e.react; })[0];
-          return fmtDate(e.date) + ": " + [e.react !== "none" && r ? r.label : "", likeLabel(e.like), e.note].filter(Boolean).join(", ");
-        });
-        td(tr, fullDate(l[0].date), "n"); td(tr, l[0].amount || ""); td(tr, String(l.length), "n");
-        td(tr, fullDate(l[l.length - 1].date), "n"); td(tr, notes.join(" | "));
-        body.appendChild(tr);
+        var l = entriesOf(n);
+        for (var from = 0; from < l.length; from += TIMES) {
+          var tr = document.createElement("tr");
+          nameCell(tr, n, from ? "פעמים " + (from + 1) + "–" + Math.min(from + TIMES, l.length) : (l.length > TIMES ? "סה״כ " + l.length + " פעמים" : ""));
+          for (var i = from; i < from + TIMES; i++) {
+            var e = l[i];
+            slot(tr, e ? fullDate(e.date) : "", e ? entryNote(e) : "");
+          }
+          body.appendChild(tr);
+        }
       });
     });
     if (!body.children.length) {
-      var tr = document.createElement("tr"); var c = document.createElement("td"); c.colSpan = 6;
+      var tr = document.createElement("tr"); var c = document.createElement("td"); c.colSpan = TIMES + 1;
       c.textContent = "עוד לא נרשם כלום. אפשר לבחור למעלה ׳טבלה ריקה למילוי ביד׳."; tr.appendChild(c); body.appendChild(tr);
     }
   }
@@ -1515,7 +1568,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
     db.backupAt = todayIso(); persist();
     var blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
     var a = document.createElement("a");
-    a.href = URL.createObjectURL(blob); a.download = "bis-rishon-backup-" + todayIso() + ".json";
+    a.href = URL.createObjectURL(blob); a.download = "hateimot-sheli-backup-" + todayIso() + ".json";
     document.body.appendChild(a); a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
     renderBackup(); toast("נוצר קובץ גיבוי");
