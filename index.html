@@ -220,6 +220,17 @@ label.ghost:has(input:focus-visible) { outline: 3px solid var(--focus); outline-
 .gate nav { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); font-size: 15px; }
 .gate nav a { color: var(--ink); font-weight: 600; }
 
+/* log out */
+.lo-opts { display: grid; gap: var(--s2); }
+.lo-opt { display: flex; gap: var(--s3); align-items: flex-start; border: 1px solid var(--line); border-radius: var(--r2); padding: var(--s3); cursor: pointer; background: var(--surface); }
+.lo-opt:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.lo-opt input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--accent); flex: none; }
+.lo-opt b { display: block; }
+.lo-opt .meta { display: block; }
+.lo-warn { background: var(--flag-bg); color: var(--ink); border-radius: var(--r1); padding: var(--s2) var(--s3); font-size: 15px; display: grid; gap: 4px; }
+.box .err { color: var(--flag); font-weight: 700; font-size: 15px; margin: 0; }
+.box h3 { font-size: 18px; }
+
 /* example banner */
 .example {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s2) var(--s3);
@@ -412,7 +423,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
     <p class="err" id="gateErr" role="alert" hidden></p>
     <button class="save" type="submit">כניסה</button>
   </form>
-  <p class="small">מכניסים את הקוד רק פעם אחת בכל טלפון. אחרי זה האתר נפתח ישר.</p>
+  <p class="small">מכניסים את הקוד פעם אחת, עם אינטרנט. אחרי זה האתר נפתח ישר, גם בלי קליטה. כל קוד מיועד לטלפון אחד.</p>
   <p class="small">אין לך קוד? אפשר לבקש אותו בהודעה באינסטגרם.</p>
   <p class="small"><b>זו לא המלצה רפואית.</b> כלי מעקב בלבד, באחריות ההורה.</p>
   <nav aria-label="מסמכים"><a href="#terms">תנאי שימוש</a><a href="#privacy">מדיניות פרטיות</a><a href="#accessibility">הצהרת נגישות</a></nav>
@@ -529,6 +540,28 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
         <button class="primary" type="button" id="installBtn" hidden>התקנה בלחיצה</button>
       </div>
     </section>
+    <section class="tools" aria-labelledby="hLogout">
+      <h2 id="hLogout">יציאה</h2>
+      <div class="row"><button class="ghost" type="button" id="logoutBtn" aria-expanded="false" aria-controls="logoutBox">התנתקות</button></div>
+      <div class="box" id="logoutBox" hidden>
+        <h3 id="loTitle">איך להתנתק?</h3>
+        <div class="lo-opts" role="radiogroup" aria-labelledby="loTitle">
+          <label class="lo-opt"><input type="radio" name="loMode" id="loTemp" value="temp" checked>
+            <span><b>יציאה זמנית</b><span class="meta">הקוד נשאר שמור לטלפון הזה, וכל הרישומים נשארים. כדי לחזור, מקלידים שוב את אותו קוד.</span></span></label>
+          <label class="lo-opt"><input type="radio" name="loMode" id="loForever" value="forever">
+            <span><b>יציאה לתמיד מהטלפון הזה</b><span class="meta">הקוד ישתחרר, ואפשר יהיה להשתמש בו בטלפון אחר (למשל בטלפון חדש). כל הרישומים בטלפון הזה יימחקו.</span></span></label>
+        </div>
+        <div class="lo-warn" id="loWarn" hidden>
+          <span>לפני שמוחקים, כדאי לשמור קובץ גיבוי. בטלפון החדש אפשר לשחזר ממנו את כל הרישומים.</span>
+          <button class="linkbtn" type="button" id="loBackup">שמירת קובץ גיבוי עכשיו</button>
+        </div>
+        <p class="err" id="loErr" role="alert" hidden></p>
+        <div class="row">
+          <button class="danger" type="button" id="loGo">התנתקות</button>
+          <button class="ghost" type="button" id="loCancel">ביטול</button>
+        </div>
+      </div>
+    </section>
     <p><b>אין באתר המלצה רפואית. השימוש באחריות ההורה בלבד.</b></p>
     <p>הכול נשמר רק בטלפון הזה. אין הרשמה, ואף אחד אחר לא רואה את מה שרשמת.</p>
     <p>בכל חשש לתגובה פני לרופא/ה. במצב חירום: מד״א <b>101</b>.</p>
@@ -613,19 +646,20 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
   <article aria-labelledby="h-privacy">
     <h2 id="h-privacy" tabindex="-1">מדיניות פרטיות</h2>
     <p class="updated">עודכן לאחרונה: 06.11.2026</p>
-    <p class="short"><b>בקצרה:</b> אנחנו לא אוספים עלייך או על התינוק שום מידע. כל מה שאת רושמת נשאר רק בטלפון שלך.</p>
+    <p class="short"><b>בקצרה:</b> כל מה שאת רושמת על התינוק נשאר רק בטלפון שלך. האתר שומר רק מתי הופעל קוד הכניסה שלך, ובאיזה מכשיר (מספר אקראי, לא מספר טלפון).</p>
 
     <h3>מה נשמר ואיפה</h3>
     <p>שם הילד/ה, המאכלים, התאריכים, הכמויות, התגובות וההערות שאת רושמת נשמרים רק בזיכרון הדפדפן במכשיר שלך (טכנולוגיה שנקראת localStorage). המידע הזה לא נשלח לבעלת האתר ולא לאף גורם אחר, ובעלת האתר לא יכולה לראות אותו.</p>
     <h3>קוד הכניסה</h3>
-    <p>קוד הכניסה נשמר רק בטלפון שלך, כדי שלא תצטרכי להקליד אותו שוב. האתר לא יודע מי נכנסה, מתי וכמה פעמים.</p>
+    <p>קוד הכניסה נשמר בטלפון שלך, כדי שלא תצטרכי להקליד אותו שוב.</p>
+    <p>בכניסה הראשונה האתר בודק את הקוד מול שירות קטן שמופעל בחשבון Cloudflare של בעלת האתר, כדי לוודא שכל קוד משמש בטלפון אחד בלבד. נשמרים: הקוד, התאריך והשעה שבהם הופעל, ומספר מזהה אקראי שנוצר בטלפון שלך. המספר הזה לא מגלה מי את: הוא לא מספר הטלפון, לא שם ולא מיקום. אחרי הכניסה הראשונה האתר לא פונה לשירות הזה שוב, ולא יודע כמה פעמים נכנסת או מה רשמת.</p>
     <p>בעלת האתר רושמת לעצמה למי נשלח כל קוד (למשל שם המשתמש באינסטגרם), רק כדי שאפשר יהיה לבטל קוד אם צריך. הרשימה הזו נשמרת אצלה באופן פרטי, לא מועברת לאף אחד ולא משמשת לשום מטרה אחרת. אפשר לבקש ממנה למחוק את הרישום שלך בכל עת.</p>
 
     <h3>מה אין באתר</h3>
     <ul>
-      <li>אין הרשמה ואין חשבון משתמש. הכניסה היא עם קוד כניסה בלבד, בלי שם, אימייל או טלפון.</li>
+      <li>אין הרשמה ואין חשבון משתמש. הכניסה היא עם קוד כניסה בלבד, בלי שם, אימייל או מספר טלפון.</li>
       <li>אין עוגיות (cookies).</li>
-      <li>אין כלי סטטיסטיקה, פיקסלים או מעקב.</li>
+      <li>אין כלי סטטיסטיקה, פיקסלים או מעקב. הפנייה היחידה החוצה היא בדיקת הקוד בכניסה הראשונה.</li>
       <li>אין פרסומות.</li>
     </ul>
     <p>אם זה ישתנה בעתיד, למשל אם יתווסף כלי סטטיסטיקה, נעדכן את המדיניות הזו לפני כן, ובמידת הצורך נבקש את הסכמתך.</p>
@@ -634,7 +668,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
     <p>כל מי שיש לו גישה למכשיר ולדפדפן שבהם רשמת. כשאת מעתיקה סיכום או מדפיסה טבלה, את מחליטה למי להעביר אותם.</p>
 
     <h3>איך מוחקים</h3>
-    <p>אפשר למחוק רישום מתוך חלון המאכל, או למחוק יומן שלם של ילד/ה. כדי למחוק הכול, אפשר לנקות את נתוני האתר בהגדרות הדפדפן.</p>
+    <p>אפשר למחוק רישום מתוך חלון המאכל, או למחוק יומן שלם של ילד/ה. כדי למחוק הכול: בתחתית האתר ← ״התנתקות״ ← ״יציאה לתמיד מהטלפון הזה״. זה מוחק את כל הרישומים מהטלפון, ומסמן שהקוד שוחרר.</p>
 
     <h3>קובץ גיבוי</h3>
     <p>כשאת שומרת קובץ גיבוי, הוא נשמר במכשיר שלך. את מחליטה איפה לשמור אותו ולמי לשלוח אותו. בעלת האתר לא מקבלת עותק.</p>
@@ -1616,6 +1650,27 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
   /* entry code: checked against a list of fingerprints of valid codes; the code itself is never stored in the page */
   var ACCESS = ["d106a5c1cd243b4ec9e933af4e4b7e9f357323940697937aab7bf01de1f9196f","b92818c408d7c57c181e89cc5090af50a1dd72595a28a559949e421e25d262d7","014ffe3fbd93f0185d156cc6a04597e525e82431a00b79a246d4dced8e170a5b","380bfc1892b46f9884fe3c035aa99db7109a3a99f1527a4b51d0438146888820","926771afbcdded8ae3f41089980fc3ec4780173433215ab364113f7fa5e66bd0","46db6b4c803473de27b4f614dc0bb484f96b16738f4ca746e29639ee100f9450","d83a88ddc3a3dfd3414b64c92b0593390c2774f3e53a7fdbe06f88ff8585a33d","b25c6bcea843ee3d1dccf29b65c8be8d717f890138d2f434fad202c4e22a7797","7ebc967526e111415267e7b0e392831b37a59fbd648b5fc660f1528c6073330a","92d90e11a4d82794a9b6c6ee171ba0e5c5138e4f3b5d1dc18e80bf5cf05719b2","ea36b008fdca8abb42e054bd3bf8536f88748a52226e76c11a56c69ec733cf21","a26e923ea2b770ec3ffd226549867b9a9d0f64aff1ba5d8b622515dbdbb20278","bb7b47688af4e5063733e043445b1e8abac3a7bf7ca0a50feed26dd71563a3a4","667b28be6e0ab8a41aa79fc172c02fdad54c5423cdeaf36468b4ef8a88b3991b","9e6e2a3b8c6e8929fb616374f2c70aca6f557c9a2b623bc2a5364b9badf21a37","ec16fd4d627e415b15a980df39616941e7e3f8b6f321229766b934fad08dde08","434bb74f0ae8e80ff97e813d0fc5d55af2cc58edbb2d1883a0fbf4e23407bcf8","e792ead7cef05aede279967eeb49bcb2514d1db439a0a115a6b81b11539d1505","f4683571271f173e520301698443460f301ae3179fa7cf062e9ee422eaa076fe","b44b14da6516ef2f391c8e422510c13c666a0acc73805b210186599b5b41488d","b681e2f5243b1624b898a3c724ee0a35cb538ea89d2393c4b5e86959253a8ed6","3ff9c9caafe9e5da4de310da9bee73983024922a19e629e8ccfcdbbe35cb2c4c","6e4c6c682d189c0addfcf31021657e12f91b4b7402b752f917470aa9dbd94cbc","16f77088b6646fdacf56499135d41242c2b4734597a6ec6834a80d145b1770ad","a8da43278ebf59890dbf5925183b8a26be22b894149bd58add45b57c9d4a059f","b55f35c992bc32872f237e6789ce3c18d120aa9866010a069bf5eae67e53f3dd","3c527f49cacc89f33b255fb8485dffed450fa8a26afd37dc9156d1a70100e029","c65257c10d61356a749e5f1da76c6c9f4284eddbf4dad6b9f93f7f0e729fdcbe","c0aced64d62ef9d9002d408906533e65695fb091f98df3bdfa6bf0f8dcc20b04","1b0824b142830cecdb7dc9bc10d8e10a8e10da34aea55a738a703ba69e6c4c49","9a531d3238f67db0007e7711273624d27d1448afc8eeb366e83f6f8998322429","545bfc50534d05eec87bc5d452f1a435c391d44c696c0ae65da75a64387ce0dc","d1d6315dbfa552196518eff236723d96439085670a1afd1a782d68016f0bd867","55497b8c0bf653e9a632b285ffcca73477660c56deca7559082126f95c917aaa","cfa88d401d4b343b5a216cc80b69877202c552f6a17f60ec9df677dc9c66bd41","bc9d3d786f2010e3f0df84139eea7f311f2d3582732f1aca68955a828861fc68","4ca4f2161057039e9ded858ed445760f9351d5c96a25ead486e75f03b1a181b2","33300c579b38f2d719ab5c65ecd52d47dc117b4132a855b2974a40d138ef3ab7","84437c78a7dde370e6e7c5e529f9a1a930dba0bdf36cd20e6b7e2f449bc6a5b9","0df11be07a68d2d7e7e0eb72577126b21c95e4b7a1da41d1ef4903274a6cd6fd","a60e22dc1ac952e994e229469673232faefdd671d73f0f42a88b35f1332e4ded","5c6c1f99935fe30adf09e83e1e18054713f153f8454dc6f92328419ae7cf8492","082ee607d542f5e5f25bc6f7d48466c3529d79a85aad1be8900d8aa4b1e16008","d6682049f6f5240f248c9886ed91f23c2cecf00eccb34cbb0493b43cf6c7dc6d","d650cbab3e2c662008704c1187b992fb7950a432660b308d58274c0204867450","509e3eef6cbee580d32a258037be5fb70c09ebd0062ce069cad031c289321586","d188f9beea9cbaee3a4de1b845150ffb267c85a573ff74a60147ba9507a1c06c","0abf2657b6ae02dc64c38da6d8a8f2d069dc0bd3cb2cda92c359129fed001a4c","a2c8b1bc21484dd0c528203b66a28ebb2da5b468ff096e386baeabdf67d4e422","194cd8d254a6d418a3b7a3331987aeedbda7af02a7a2c7d4a8068afb13732019","77863ff8be862fae16ac0fdb8f2a6d10f1198fca6b3670223f4313ca710b9ba2","3fe88c259baf9f38e90aa0a9989c3959d7d4ee5c7fa5c12d9b7487d4d72ac1af","9f2d45e2bfa2fa5bee06d027d0400553c3ce00d8e5a56527d792059c9af0a316","034e91c6148319ab25992fe8ff606f2572fa0e361fd97d316da7e418ef652621","70d18245297b9b0a503f7f7a7725d356fc8d04f44ce4cac28aeb15b1db432e8a","17307a6fd98f86d86dc18cf02cd87da3096024b5c3e3edb4ffd27357a2e5e09f","30aa09fc4f7639665ff68e810d1835159f72d52022e41650089862dd93e6f5e4","6f40a9afb05ef59d23b07a951e9dcd90ffd02419ce1bd09756d908c8862205d8","7f78eddc0aa31c73f45933a89860918fcabaf29eb2a3c4b95db1d75c21a9010e","d0b0b2e1bf2b2f50dc9ee3e16dca48fba111f3e63c31d4b04f45aaf1bcb8d5c6","0e18ea30b40f87ddf608f85c34aa8feff48bfd40387ef79bd8a728d039854745","a0956ee37bb306e868867312d8808a8c05d4dcc69860a7e1ff1f784b07f262a3","0e9776ce70afc88c3db0eec258e3d1190d12c5cb9867cd9596684866acf9db17","7e69b1dc850e146cf3c5cb70882dea3f6bd9fac3451a85c7f9cea11aaa39a838","f0bfb10421c2459cf0e6c4ebc812acd2840569e3a824c5f2a9565fa8b731d471","d9d888c5a1a4ce3265ceac0436d6b1bbeb0ba8bc67c727a7d24e5069fd93a7fd","48d1197035beb677074e3edd8c6333a58b33170762064918bfe1fafd01967ca0","c6486ebbdef5105535f6e157bd69456fe6427c4e693bb4c58667d66543f8bea1","ac0461316e20ee7a842fc7612d1adbafe3a27fd02ae8a25bd3c4889dbed96b6b","30a7dff0a04e1ef90c56151d145d9355b67332fe80374172469004e37b849048","0c592ddad74f4b526522b56e79c465058bd3e0735cfe077d39cddbd485432b88","1f90eb6381bc520bfaa166b90a6c1d55dd832b53a3c5fe365805a70c6dc004f2","64d0ec7c9cff02297dd149d4a20844cc48a1d6c43cd614159192b89637a0e896","48f9021ec0a4b16404583c1edbc9d71339bc6a85f237e9dd81817486fd2b3a40","f3d597172c0f67fa5e927797b10760813ea1255a8aa8c69face2a753d4915c70","07c366fb90a3a953ae9cb2579fa33a9ff0986c4c8876f382379cfef9f25d7659","462b4074bf3747678feda6117e302b113f0c9762ef14c12c0fd8bf14a91d3a7d","49f06fce78f7babbd858dfa1a7431d1d804d04d6f1e6603bdd7c15b51340d99d","890e9624d0e61e91b4420b00a3ee4a0d0ac95fcc4fbc3992d992464e50a6bdc9","05548f3c8196c47ec4b51acf8ec3b93c7d31ca202001ac42688cdc128e26aa9d","b2b8157a6a2dac2e2996b10492faa7e0b59ffd57d77713cc70d392054bcadb39","66a70ad9bb4653f58f17093ad8fbe05aadd54f3313830220c7264fa79fda0c5c","8dc2a2e2407d5f710cdd64f4d7a0e4eb36c699d4ce8882978f0c01a5608aec77","d6ce0f03554085597d26ad1bb28fe0ec93f2ee5205da5a517346b228d0d909ab","bf089910a2da1451b91f68163864d20fe62c7d81d37ae741eb81c519e9bea766","dabdad00a762dbe5b472a925250afd94dc753df15a1cad3ba4bba982bce4fa0d","5e7ac59b03b3eb6422dd9c6c5202ae7423866396626015c9ffa0ffd9963c1522","7a2069631da8d09fe4d12b2a841b9de42f81a7f214c4d012c12d8c2eabd8ce79","6d7d8c8f23fb4f2596f8e60430c474639f92b9692d0cdab1cc6c9229042c1016","9224e6e59c116713d2f1ad02e733c79d1103f4c47b629d75aa8be086c72cc904","6e21cb6317789002995a835eddeb60c61e9113ec7e15735800eaa62737fcdf53","bcaeaf2ef394a7efefede38a5543432c508741e0d16acb6855984f10cf19cffe","4072f1310d7666329cea73b9eeffc6ae71c689f82c05b55e5584f923372dccdc","dc184ccd504e0d4a7caba3366d192ff3ef01e64bec044c681062ea2bc37764de","bdb243ce5771ecb60090b2c53802f433fcb0d1cd5fc908257f6f1b606d0cc211","f4090efe1df966f89f99c0955b59926dc4cdd03f5ec82f25934d823082aadd3a","ff0af34ad1950f38143dfe4c905e4ffe3b3091c299865f7044e87c175129f27d","ba80b371829324a09204521d0274d25d932954fb6ef24935cfd21d0336acd8e9","624420b7f19922fdfa1a7ca13422b094d1ec9c1af7e5438169b7186a6b605635","756b627c15f6f08d3bb6cb505f41ee26fbb643c25dfa441bf1192e8dbe9364a8"];
   var ACCESS_KEY = "hateimot-sheli:code";
+  /* the code checker (Cloudflare Worker): locks each code to the phone that used it first. Empty = not connected yet. */
+  var CODE_SERVER = "https://hateimot-codes.avital-shusterman-edri.workers.dev/"; /* filled in by tools/build.py for the real site; the demo stays without it */
+  var DEVICE_KEY = "hateimot-sheli:device";
+  function deviceId() {
+    var id = ""; try { id = localStorage.getItem(DEVICE_KEY) || ""; } catch (err) {}
+    if (!/^[a-z0-9]{12}$/.test(id)) {
+      var a = new Uint8Array(12); crypto.getRandomValues(a);
+      id = Array.prototype.map.call(a, function (b) { return "abcdefghijkmnpqrstuvwxyz23456789"[b % 32]; }).join("");
+      try { localStorage.setItem(DEVICE_KEY, id); } catch (err) {}
+    }
+    return id;
+  }
+  function claim(code, action) {
+    if (!CODE_SERVER) return Promise.resolve({ ok: true, released: action === "release" });
+    var ctl = window.AbortController ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctl) ctl.abort(); }, 12000);
+    return fetch(CODE_SERVER, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code: code, device: deviceId(), action: action || "claim" }), signal: ctl ? ctl.signal : undefined })
+      .then(function (r) { return r.json(); })
+      .catch(function () { return { ok: false, reason: "offline" }; })
+      .then(function (res) { clearTimeout(timer); return res; });
+  }
   var unlocked = false;
   function normCode(c) { return String(c || "").toUpperCase().replace(/[^A-Z0-9]/g, ""); }
   function hashCode(c) {
@@ -1634,18 +1689,81 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
     ev.preventDefault();
     var c = normCode(el("gateCode").value);
     if (!c) { gateError("צריך להקליד את הקוד שקיבלת."); el("gateCode").focus(); return; }
+    var btn = el("gateForm").querySelector(".save");
     hashCode(c).then(function (h) {
       if (ACCESS.indexOf(h) === -1) { gateError("הקוד לא מתאים. כדאי לבדוק שהוא הועתק בדיוק כמו שהוא."); el("gateCode").focus(); return; }
-      try { localStorage.setItem(ACCESS_KEY, c); } catch (err) {}
-      unlocked = true; gateError(""); showMain(); window.scrollTo(0, 0); toast("ברוכה הבאה!");
+      btn.disabled = true; btn.textContent = "בודקת את הקוד…"; gateError("");
+      claim(c).then(function (res) {
+        btn.disabled = false; btn.textContent = "כניסה";
+        if (!res || !res.ok) {
+          var why = res && res.reason;
+          gateError(why === "used" ? "הקוד הזה כבר נמצא בשימוש בטלפון אחר. אם החלפת טלפון, אפשר לבקש שנאפס אותו."
+            : why === "invalid" ? "הקוד לא מתאים. כדאי לבדוק שהוא הועתק בדיוק כמו שהוא."
+            : why === "offline" ? "בכניסה הראשונה צריך חיבור לאינטרנט. כדאי לנסות שוב כשיש קליטה."
+            : "משהו השתבש בבדיקת הקוד. כדאי לנסות שוב בעוד רגע.");
+          el("gateCode").focus(); return;
+        }
+        try { localStorage.setItem(ACCESS_KEY, c); localStorage.setItem("hateimot-sheli:claimed", c); } catch (err) {}
+        unlocked = true; showMain(); window.scrollTo(0, 0); toast("ברוכה הבאה!");
+      });
     });
   });
+  /* log out: for now (code and records stay) or for good (code freed, records on this phone deleted) */
+  function loMode() { return el("loForever").checked ? "forever" : "temp"; }
+  function renderLogout() {
+    var f = loMode() === "forever";
+    el("loWarn").hidden = !f;
+    el("loGo").textContent = f ? "כן, לצאת לתמיד ולמחוק" : "התנתקות";
+  }
+  function closeLogout() {
+    el("logoutBox").hidden = true; el("logoutBtn").setAttribute("aria-expanded", "false");
+    el("loTemp").checked = true; el("loErr").hidden = true; renderLogout();
+  }
+  el("logoutBtn").addEventListener("click", function () {
+    var open = el("logoutBox").hidden;
+    if (!open) { closeLogout(); return; }
+    el("logoutBox").hidden = false; el("logoutBtn").setAttribute("aria-expanded", "true"); renderLogout(); el("loTemp").focus();
+  });
+  el("loTemp").addEventListener("change", renderLogout);
+  el("loForever").addEventListener("change", renderLogout);
+  el("loCancel").addEventListener("click", function () { closeLogout(); el("logoutBtn").focus(); });
+  el("loBackup").addEventListener("click", function () { el("doBackup").click(); });
+  function lockOut(msg) {
+    unlocked = false; closeLogout(); el("gateCode").value = ""; gateError("");
+    showMain(); window.scrollTo(0, 0); toast(msg);
+  }
+  el("loGo").addEventListener("click", function () {
+    var saved = ""; try { saved = localStorage.getItem(ACCESS_KEY) || ""; } catch (err) {}
+    if (loMode() === "temp") {
+      try { localStorage.removeItem(ACCESS_KEY); localStorage.removeItem("hateimot-sheli:claimed"); } catch (err) {}
+      lockOut("התנתקת. הרישומים שמורים בטלפון.");
+      return;
+    }
+    var go = el("loGo"); go.disabled = true; go.textContent = "רגע…"; el("loErr").hidden = true;
+    (saved ? claim(saved, "release") : Promise.resolve({ ok: true, released: true })).then(function (res) {
+      go.disabled = false; renderLogout();
+      if (!res || !res.ok || !res.released) {
+        el("loErr").textContent = res && res.reason === "offline"
+          ? "כדי לשחרר את הקוד צריך חיבור לאינטרנט. אפשר לנסות שוב כשיש קליטה, או לבחור יציאה זמנית."
+          : "לא הצלחתי לשחרר את הקוד. אפשר לנסות שוב בעוד רגע, או לבחור יציאה זמנית.";
+        el("loErr").hidden = false; return;
+      }
+      try { [KEY, KEY_OLD, ACCESS_KEY, DEVICE_KEY, "hateimot-sheli:claimed"].forEach(function (k) { localStorage.removeItem(k); }); } catch (err) {}
+      db = sample(); state = kidById(db.active); query = ""; el("q").value = ""; renderAll();
+      lockOut("יצאת לתמיד. הקוד שוחרר והרישומים נמחקו מהטלפון.");
+    });
+  });
+
   function checkAccess() {
     if (!window.crypto || !crypto.subtle) { unlocked = true; return Promise.resolve(); }
     var saved = ""; try { saved = localStorage.getItem(ACCESS_KEY) || ""; } catch (err) {}
     if (!saved) return Promise.resolve();
     return hashCode(saved).then(function (h) {
-      if (ACCESS.indexOf(h) !== -1) unlocked = true;
+      if (ACCESS.indexOf(h) !== -1) {
+        unlocked = true;
+        var done = ""; try { done = localStorage.getItem("hateimot-sheli:claimed") || ""; } catch (err) {}
+        if (CODE_SERVER && done !== saved) claim(saved).then(function (res) { if (res && res.ok) { try { localStorage.setItem("hateimot-sheli:claimed", saved); } catch (err) {} } });
+      }
       else { try { localStorage.removeItem(ACCESS_KEY); } catch (err) {} gateError("הקוד שנשמר בטלפון כבר לא פעיל. אפשר לבקש קוד חדש."); }
     });
   }
