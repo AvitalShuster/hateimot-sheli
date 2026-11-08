@@ -23,6 +23,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0} img{max-width:100%}</style>
 <script>
+try { var t = localStorage.getItem("hateimot-sheli:theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {}
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
 }
@@ -468,9 +469,8 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
     </div>
   </section>
 
-  <div class="example" id="exampleBar" hidden>
-    <span>הרשימה מלאה בנתוני דוגמה כדי שתראי איך זה נראה.</span>
-    <button class="linkbtn" id="clearExample" type="button">מחיקת הדוגמה והתחלה מאפס</button>
+  <div class="example" id="startHint" hidden>
+    <span><b>מתחילות?</b> ליד כל מאכל יש ״+ נתתי היום״. לוחצים, ממלאים מה שרוצים ושומרים. אפשר גם לרשום ארוחה שלמה בבת אחת.</span>
   </div>
 
   <section class="summary" aria-label="סיכום">
@@ -540,6 +540,15 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
         <button class="primary" type="button" id="installBtn" hidden>התקנה בלחיצה</button>
       </div>
     </section>
+    <section class="tools" aria-labelledby="hTheme">
+      <h2 id="hTheme">תצוגה</h2>
+      <div class="chips" role="group" aria-labelledby="hTheme" id="themeChips">
+        <button class="chip" type="button" data-theme-choice="auto">אוטומטית (לפי הטלפון)</button>
+        <button class="chip" type="button" data-theme-choice="light">בהירה</button>
+        <button class="chip" type="button" data-theme-choice="dark">כהה</button>
+      </div>
+    </section>
+
     <section class="tools" aria-labelledby="hLogout">
       <h2 id="hLogout">יציאה</h2>
       <div class="row"><button class="ghost" type="button" id="logoutBtn" aria-expanded="false" aria-controls="logoutBox">התנתקות</button></div>
@@ -848,24 +857,6 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
   function newKid(name) {
     return { id: "k" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), child: name || "", entries: {}, own: [], meals: [] };
   }
-  function sample() {
-    var e = {};
-    function add(name, n, amount, react, note, like) { (e[name] = e[name] || []).push({ date: daysAgo(n), amount: amount || "", react: react || "none", like: like || "", note: note || "" }); }
-    add("בטטה", 20, "כפית", "none", "", "yes"); add("בטטה", 14, "כף"); add("בטטה", 11, "כמה ביסים", "none", "", "yes");
-    add("אבוקדו", 18, "½ כפית", "none", "", "meh"); add("אבוקדו", 10, "כפית"); add("אבוקדו", 3, "כף", "none", "", "yes");
-    add("שומשום (טחינה)", 12, "¼ כפית", "none", "מדולל במים, מעורבב בבטטה"); add("שומשום (טחינה)", 5, "½ כפית");
-    add("בוטנים", 16, "טעימה קטנה", "none", "במבה מומסת", "yes"); add("בוטנים", 9, "½ כפית"); add("בוטנים", 2, "כפית");
-    add("ביצה", 4, "¼ כפית", "mild", "קצת אודם סביב הפה, עבר אחרי חצי שעה");
-    add("גזר", 15, "כפית", "none", "", "no"); add("בננה", 8, "כמה ביסים", "none", "", "yes"); add("שיבולת שועל", 7, "כף"); add("קישוא", 11, "כפית");
-    var k = newKid(""); k.entries = e;
-    function meal(n, foods, note, name) {
-      var id = "m" + n; k.meals.push({ id: id, date: daysAgo(n), foods: foods, note: note || "", name: name || "" });
-      foods.forEach(function (f) { (e[f] = e[f] || []).push({ date: daysAgo(n), amount: "", react: "none", like: "", note: note || "", meal: id }); });
-    }
-    meal(6, ["בטטה", "שיבולת שועל", "בננה"], "", "ארוחת בוקר");
-    meal(1, ["בטטה", "קישוא", "עוף"], "הכול מעורבב", "ארוחת צהריים");
-    return { app: "bis-rishon", v: 2, kids: [k], active: k.id, example: true, sort: "list", backupAt: "", open: {} };
-  }
   /* checks and cleans anything loaded from storage or from a backup file */
   function normalize(d) {
     if (!d || typeof d !== "object" || !Array.isArray(d.kids) || !d.kids.length) return null;
@@ -894,10 +885,45 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
       open: (function () { var o = {}; if (d.open && typeof d.open === "object") Object.keys(d.open).forEach(function (k) { if (typeof d.open[k] === "boolean") o[k.slice(0, 20)] = d.open[k]; }); return o; })(),
       backupAt: typeof d.backupAt === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d.backupAt) ? d.backupAt : "" };
   }
+  /* Earlier versions opened with sample data. Phones that still have it get it removed once:
+     only entries that match the sample exactly, and the two sample meals. Anything the mom added stays. */
+  var SAMPLE = [
+    ["בטטה", "כפית", "none", "yes", ""], ["בטטה", "כף", "none", "", ""], ["בטטה", "כמה ביסים", "none", "yes", ""], ["בטטה", "כף", "none", "yes", "אכל/ה הכול"],
+    ["אבוקדו", "½ כפית", "none", "meh", ""], ["אבוקדו", "כפית", "none", "", ""], ["אבוקדו", "כף", "none", "yes", ""],
+    ["שומשום (טחינה)", "¼ כפית", "none", "", "מדולל במים, מעורבב בבטטה"], ["שומשום (טחינה)", "½ כפית", "none", "", ""],
+    ["בוטנים", "טעימה קטנה", "none", "yes", "במבה מומסת"], ["בוטנים", "½ כפית", "none", "", ""], ["בוטנים", "כפית", "none", "", ""],
+    ["ביצה", "¼ כפית", "mild", "", "קצת אודם סביב הפה, עבר אחרי חצי שעה"],
+    ["גזר", "כפית", "none", "no", ""], ["בננה", "כמה ביסים", "none", "yes", ""], ["שיבולת שועל", "כף", "none", "", ""], ["קישוא", "כפית", "none", "", ""]
+  ];
+  function removeSample(d) {
+    var sampleMeals = ["m6", "m1"];
+    d.kids.forEach(function (k) {
+      k.meals = k.meals.filter(function (m) { return sampleMeals.indexOf(m.id) === -1; });
+      Object.keys(k.entries).forEach(function (n) { k.entries[n] = k.entries[n].filter(function (e) { return sampleMeals.indexOf(e.meal) === -1; }); });
+      SAMPLE.forEach(function (sg) {
+        var arr = k.entries[sg[0]]; if (!arr) return;
+        for (var i = 0; i < arr.length; i++) {
+          var e = arr[i];
+          if (!e.meal && e.amount === sg[1] && e.react === sg[2] && e.like === sg[3] && e.note === sg[4]) { arr.splice(i, 1); break; }
+        }
+      });
+      Object.keys(k.entries).forEach(function (n) { if (!k.entries[n].length) delete k.entries[n]; });
+    });
+    d.example = false;
+    return d;
+  }
+  function emptyDb() {
+    var k = newKid("");
+    return { app: "bis-rishon", v: 2, kids: [k], active: k.id, example: false, sort: "list", backupAt: "", open: {} };
+  }
   function load() {
     try {
       var raw = localStorage.getItem(KEY);
-      if (raw) { var d = normalize(JSON.parse(raw)); if (d) return d; }
+      if (raw) {
+        var d = normalize(JSON.parse(raw));
+        if (d && d.example) { d = removeSample(d); try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (err) {} }
+        if (d) return d;
+      }
       var old = localStorage.getItem(KEY_OLD);
       if (old) {
         var o = JSON.parse(old);
@@ -905,7 +931,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
         if (m) return m;
       }
     } catch (err) {}
-    return sample();
+    return emptyDb();
   }
   function persist() { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (err) {} }
   var db = load();
@@ -1054,7 +1080,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
       p.setAttribute("aria-label", a + (on ? ": נטעם" : ": עוד לא"));
       s.appendChild(p);
     });
-    el("exampleBar").hidden = !db.example;
+    el("startHint").hidden = db.kids.some(function (k) { return Object.keys(k.entries).some(function (n) { return k.entries[n].length; }); });
   }
 
   function spoons(n) {
@@ -1451,9 +1477,6 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
 
   el("q").addEventListener("input", function () { query = el("q").value.trim(); renderList(); });
 
-  el("clearExample").addEventListener("click", function () {
-    state.entries = {}; state.own = []; state.meals = []; db.example = false; persist(); renderAll(); toast("הרשימה ריקה. אפשר להתחיל");
-  });
 
   /* summary text */
   function summaryText() {
@@ -1465,7 +1488,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
       foods.forEach(function (n) {
         var l = entriesOf(n);
         var react = l.filter(function (e) { return e.react !== "none"; });
-        var s = "• " + n + ": " + l.length + " פעמים, ראשונה " + fmtDate(l[0].date) + ", אחרונה " + fmtDate(l[l.length - 1].date);
+        var s = "• " + n + ": " + (l.length === 1 ? "פעם אחת" : l.length + " פעמים") + ", ראשונה " + fmtDate(l[0].date) + ", אחרונה " + fmtDate(l[l.length - 1].date);
         if (react.length) s += " (נרשמה תגובה: " + react.map(function (e) { return fmtDate(e.date) + (e.note ? " - " + e.note : ""); }).join("; ") + ")";
         var lastLike = l.filter(function (e) { return e.like; }).pop();
         if (lastLike) s += ". " + likeLabel(lastLike.like);
@@ -1708,6 +1731,28 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
       });
     });
   });
+  /* display: follow the phone, or always light / always dark (remembered on this phone) */
+  var THEME_KEY = "hateimot-sheli:theme";
+  function applyTheme(t) {
+    if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    else document.documentElement.removeAttribute("data-theme");
+    Array.prototype.forEach.call(document.querySelectorAll("[data-theme-choice]"), function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-theme-choice") === (t || "auto")));
+    });
+  }
+  var savedTheme = ""; try { savedTheme = localStorage.getItem(THEME_KEY) || ""; } catch (err) {}
+  if (savedTheme) applyTheme(savedTheme); else Array.prototype.forEach.call(document.querySelectorAll("[data-theme-choice]"), function (b) {
+    b.setAttribute("aria-pressed", String(b.getAttribute("data-theme-choice") === "auto"));
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-theme-choice]"), function (b) {
+    b.addEventListener("click", function () {
+      var t = b.getAttribute("data-theme-choice");
+      try { if (t === "auto") localStorage.removeItem(THEME_KEY); else localStorage.setItem(THEME_KEY, t); } catch (err) {}
+      applyTheme(t);
+      toast(t === "dark" ? "תצוגה כהה" : t === "light" ? "תצוגה בהירה" : "התצוגה לפי הטלפון");
+    });
+  });
+
   /* log out: for now (code and records stay) or for good (code freed, records on this phone deleted) */
   function loMode() { return el("loForever").checked ? "forever" : "temp"; }
   function renderLogout() {
@@ -1749,7 +1794,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
         el("loErr").hidden = false; return;
       }
       try { [KEY, KEY_OLD, ACCESS_KEY, DEVICE_KEY, "hateimot-sheli:claimed"].forEach(function (k) { localStorage.removeItem(k); }); } catch (err) {}
-      db = sample(); state = kidById(db.active); query = ""; el("q").value = ""; renderAll();
+      db = emptyDb(); state = kidById(db.active); query = ""; el("q").value = ""; renderAll();
       lockOut("יצאת לתמיד. הקוד שוחרר והרישומים נמחקו מהטלפון.");
     });
   });
