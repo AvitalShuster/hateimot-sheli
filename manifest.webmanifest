@@ -1,0 +1,18 @@
+{
+  "name": "הטעימות שלי: יומן טעימות לתינוק",
+  "short_name": "הטעימות שלי",
+  "description": "יומן טעימות לתינוק: מה נתת, מתי, כמה וכמה פעמים. מעקב בלבד, לא המלצה רפואית.",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f2f5ef",
+  "theme_color": "#f2f5ef",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

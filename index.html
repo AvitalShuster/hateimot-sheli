@@ -1,0 +1,1347 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הטעימות שלי: יומן טעימות לתינוק</title>
+<meta name="description" content="יומן טעימות לתינוק בעברית: מה נתת, מתי, כמה וכמה פעמים. בחינם, בלי הרשמה, הכול נשמר רק בטלפון שלך. מעקב בלבד, לא המלצה רפואית.">
+<link rel="canonical" href="https://avitalshuster.github.io/hateimot-sheli/">
+<meta name="theme-color" content="#f2f5ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171b15" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="הטעימות שלי">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="הטעימות שלי: יומן טעימות לתינוק">
+<meta property="og:description" content="יומן טעימות לתינוק בעברית: מה נתת, מתי, כמה וכמה פעמים. בחינם, בלי הרשמה, הכול נשמר רק בטלפון שלך. מעקב בלבד, לא המלצה רפואית.">
+<meta property="og:image" content="https://avitalshuster.github.io/hateimot-sheli/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://avitalshuster.github.io/hateimot-sheli/">
+<meta name="twitter:card" content="summary_large_image">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0} img{max-width:100%}</style>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
+}
+</script>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+/* Layout: one narrow column, like a page in a notebook on the fridge. Each food is a line with spoon-dots that fill up. */
+:root {
+  --ground: #f2f5ef;      /* sage mist */
+  --surface: #ffffff;
+  --ink: #23291f;
+  --muted: #5e6858;
+  --line: #dde5d6;
+  --spoon: #8fae7e;       /* pea green: a dot that got filled */
+  --spoon-empty: #dbe5d3;
+  --accent: #b9503a;      /* peach-coral: the one action */
+  --accent-ink: #ffffff;
+  --flag: #94561c;        /* a reaction was noted */
+  --flag-bg: #f6e8dc;
+  --focus: #2457a8;
+  --font-display: "Fredoka", "Assistant", system-ui, sans-serif;
+  --font-text: "Assistant", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px;
+  --r1: 6px; --r2: 12px; --r3: 20px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #171b15; --surface: #20261d; --ink: #eaf0e5; --muted: #a7b29f; --line: #343d2f;
+    --spoon: #a3c290; --spoon-empty: #3a4534; --accent: #f09a7a; --accent-ink: #2a1610;
+    --flag: #e8a96a; --flag-bg: #3a2e22; --focus: #8fb4ff; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #171b15; --surface: #20261d; --ink: #eaf0e5; --muted: #a7b29f; --line: #343d2f;
+  --spoon: #a3c290; --spoon-empty: #3a4534; --accent: #f09a7a; --accent-ink: #2a1610;
+  --flag: #e8a96a; --flag-bg: #3a2e22; --focus: #8fb4ff; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--ground); color: var(--ink);
+  font-family: var(--font-text); font-size: 17px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: var(--s5) var(--s7);
+}
+.wrap { max-width: 640px; margin: 0 auto; display: grid; gap: var(--s5); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; margin: 0; text-wrap: balance; line-height: 1.2; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* header */
+.top { display: grid; gap: var(--s2); }
+.brand { display: flex; align-items: center; gap: var(--s3); }
+.brand svg { flex: none; }
+.brand h1 { font-size: 34px; letter-spacing: -0.01em; }
+.lead { font-size: 20px; margin: 0; }
+.lead b { font-weight: 700; }
+.disclaimer {
+  margin: 0; font-size: 15px; background: var(--surface); border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--ink); border-radius: var(--r1); padding: var(--s3) var(--s4);
+}
+.disclaimer strong { display: block; font-size: 17px; margin-bottom: 2px; }
+.child { display: grid; gap: var(--s2); }
+.child-form { display: grid; gap: 6px; }
+.child-form label { font-weight: 700; font-size: 15px; }
+.child-form .r { display: flex; gap: var(--s2); }
+.child-form input { flex: 1; min-width: 0; border: 1px solid var(--line); background: var(--surface); border-radius: var(--r2); padding: 10px 14px; min-height: 44px; }
+.child-show { display: flex; align-items: baseline; gap: var(--s3); flex-wrap: wrap; }
+.child-show > span { font-family: var(--font-display); font-weight: 600; font-size: 22px; }
+.kid-tabs { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.confirm { display: grid; gap: var(--s2); background: var(--surface); border: 1px solid var(--accent); border-radius: var(--r2); padding: var(--s3) var(--s4); font-size: 15px; }
+.confirm .row { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.danger { border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-weight: 700; min-height: 40px; padding: 0 16px; cursor: pointer; }
+.meal-btn { justify-self: start; }
+.sortbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); font-size: 14px; color: var(--muted); }
+.sortbar .chip { min-height: 32px; }
+.tools { display: grid; gap: var(--s3); }
+.tools h2 { font-size: 18px; color: var(--ink); }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r2); padding: var(--s3) var(--s4); display: grid; gap: var(--s2); color: var(--ink); }
+.box p { margin: 0; }
+.box .meta { color: var(--muted); }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+label.ghost { display: inline-flex; align-items: center; }
+label.ghost:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+.howto-title { font-family: var(--font-text); font-weight: 700; font-size: 17px; }
+.legal a, .box a { color: var(--accent); font-weight: 700; }
+.meals { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r2); }
+.meal { display: grid; gap: 4px; padding: var(--s3) var(--s4); border-top: 1px solid var(--line); }
+.meal:first-child { border-top: 0; }
+.meal .when { font-weight: 700; font-variant-numeric: tabular-nums; }
+.meal .foods { font-size: 16px; }
+.meal .acts { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); }
+.meal .acts button { min-height: 32px; }
+.more { justify-self: start; }
+.own-remove { justify-self: start; }
+.meal-foods { display: grid; gap: var(--s3); max-height: 40vh; overflow-y: auto; padding: 2px; }
+.meal-foods h4 { margin: 0 0 6px; font-size: 13px; color: var(--muted); font-weight: 700; }
+.meal-count { font-size: 14px; color: var(--muted); }
+
+/* example banner */
+.example {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s2) var(--s3);
+  background: var(--surface); border: 1px dashed var(--line); border-radius: var(--r2); padding: var(--s3) var(--s4);
+  font-size: 15px;
+}
+.linkbtn { background: none; border: 0; padding: var(--s1) 0; color: var(--accent); font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+/* summary */
+.summary { display: grid; gap: var(--s3); }
+.counts { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); font-size: 16px; color: var(--muted); }
+.counts strong { font-family: var(--font-display); font-weight: 600; font-size: 26px; color: var(--ink); font-variant-numeric: tabular-nums; margin-inline-end: var(--s1); }
+.allergen-strip { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.pill {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600;
+  padding: 3px 10px 3px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+}
+.pill .d { width: 8px; height: 8px; border-radius: 50%; background: var(--spoon-empty); }
+.pill.on { color: var(--ink); }
+.pill.on .d { background: var(--spoon); }
+
+/* controls */
+.controls { display: grid; gap: var(--s3); position: sticky; top: env(safe-area-inset-top, 0px); background: var(--ground); padding-block: var(--s2); z-index: 5; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--ground); }
+.tabs { display: flex; gap: var(--s2); overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex: none; border: 1px solid var(--line); background: var(--surface); border-radius: 999px;
+  padding: 6px 14px; font-weight: 600; font-size: 15px; cursor: pointer; min-height: 38px;
+}
+.tab[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+.controls-2 { display: grid; gap: var(--s3); margin-top: calc(-1 * var(--s3)); }
+.search { width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: var(--r2); padding: 10px 14px; min-height: 44px; }
+
+/* list */
+.group { display: grid; gap: var(--s2); scroll-margin-top: 120px; }
+.group h2 { font-size: 20px; padding-top: var(--s3); }
+.group .hint { margin: 0; font-size: 14px; color: var(--muted); }
+.list { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r2); }
+.item { display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s4); border-top: 1px solid var(--line); }
+.item:first-child { border-top: 0; }
+.open { flex: 1; min-width: 0; display: grid; gap: 2px; text-align: start; background: none; border: 0; padding: 0; cursor: pointer; }
+.name { font-weight: 700; font-size: 17px; display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; }
+.meta { font-size: 14px; color: var(--muted); }
+.flag { font-size: 12px; font-weight: 700; color: var(--flag); background: var(--flag-bg); border-radius: 999px; padding: 1px 8px; }
+.spoons { display: flex; gap: 4px; align-items: center; direction: rtl; }
+.spoons i { width: 10px; height: 10px; border-radius: 50%; background: var(--spoon-empty); }
+.spoons i.f { background: var(--spoon); }
+.spoons b { font-size: 13px; color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; margin-inline-start: 2px; }
+.today {
+  flex: none; border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink);
+  font-weight: 700; font-size: 15px; padding: 0 14px; min-height: 40px; cursor: pointer;
+  transition: transform 150ms ease-out;
+}
+.today:active { transform: scale(0.96); }
+.today.done { background: var(--spoon-empty); color: var(--ink); }
+
+/* printable table */
+.pv { display: grid; gap: var(--s4); max-width: 900px; margin: 0 auto; }
+.pv-actions { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s3); align-items: center; }
+.pv-actions label { display: inline-flex; gap: var(--s2); align-items: center; font-size: 15px; }
+.pv-actions input { width: 20px; height: 20px; accent-color: var(--accent); }
+.pv-head h2 { font-size: 26px; }
+.pv-head p { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+.pv-demo { font-size: 14px; color: var(--muted); margin: 0; }
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r2); background: var(--surface); }
+table.log { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 14px; }
+.log th, .log td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: start; vertical-align: top; }
+.log thead th { font-size: 13px; color: var(--muted); font-weight: 700; background: var(--ground); }
+.log tbody th.cat { background: var(--ground); font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--ink); }
+.log td.n { font-variant-numeric: tabular-nums; }
+.log tr.blank td { height: 34px; }
+.log td.ticks { letter-spacing: 4px; color: var(--muted); white-space: nowrap; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; justify-self: start; }
+.seg label { position: relative; display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 15px; cursor: pointer; }
+.seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.seg label:has(input:checked) { background: var(--ink); color: var(--ground); }
+.seg label:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+.primary { border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-weight: 700; min-height: 44px; padding: 0 20px; cursor: pointer; }
+/* legal pages */
+.legal { display: grid; gap: var(--s6); max-width: 680px; margin: 0 auto; }
+.legal-nav { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.legal article { display: grid; gap: var(--s3); scroll-margin-top: var(--s4); }
+.legal h2 { font-size: 28px; }
+.legal h3 { font-size: 18px; margin-top: var(--s2); }
+.legal p, .legal ul { margin: 0; max-width: 65ch; }
+.legal ul { padding-inline-start: 1.2em; display: grid; gap: 4px; }
+.legal .updated { font-size: 14px; color: var(--muted); }
+.legal .short { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r2); padding: var(--s3) var(--s4); }
+.fill { background: var(--flag-bg); color: var(--flag); font-weight: 700; padding: 0 4px; border-radius: 4px; }
+.foot nav { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); }
+.foot nav a { color: var(--ink); font-weight: 600; text-underline-offset: 3px; }
+@media print {
+  @page { size: A4; margin: 12mm; }
+  body { background: #fff; color: #000; padding: 0; font-size: 12px; }
+  body::before, .wrap, .pv-actions, .pv-demo, .seg, .toast, dialog { display: none !important; }
+  .log td.ticks { color: #000; }
+  .pv { display: grid !important; max-width: none; }
+  .tbl-wrap { overflow: visible; border: 0; }
+  table.log { min-width: 0; font-size: 11px; }
+  .log th, .log td, .log thead th { border: 1px solid #999; padding: 4px 6px; color: #000; }
+  .log thead th, .log tbody th.cat { background: #eee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .log tr { break-inside: avoid; }
+  .pv-head p { color: #000; }
+}
+.empty { padding: var(--s5) var(--s4); color: var(--muted); text-align: center; }
+
+.add-own { display: flex; gap: var(--s2); flex-wrap: wrap; }
+.add-own input { flex: 1 1 200px; min-width: 0; border: 1px solid var(--line); background: var(--surface); border-radius: var(--r2); padding: 10px 14px; min-height: 44px; }
+.ghost { border: 1px solid var(--ink); background: transparent; border-radius: 999px; padding: 0 18px; min-height: 44px; font-weight: 700; cursor: pointer; }
+
+/* footer */
+.foot { display: grid; gap: var(--s3); font-size: 15px; color: var(--muted); border-top: 1px solid var(--line); padding-top: var(--s5); }
+.foot p { margin: 0; }
+.foot .row { display: flex; flex-wrap: wrap; gap: var(--s3); }
+
+/* sheet */
+dialog {
+  border: 0; padding: 0; width: min(640px, 100%); max-width: 100%; max-height: 92vh; margin: auto auto 0; border-radius: var(--r3) var(--r3) 0 0;
+  background: var(--surface); color: var(--ink);
+}
+@media (min-width: 700px) { dialog { margin: auto; border-radius: var(--r3); } }
+dialog::backdrop { background: rgba(23, 27, 21, 0.45); }
+dialog[open] { animation: up 220ms cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes up { from { transform: translateY(24px); opacity: 0.6; } to { transform: none; opacity: 1; } }
+.sheet { display: grid; gap: var(--s4); padding: var(--s5) max(var(--s5), env(safe-area-inset-left, 0px)) calc(var(--s5) + env(safe-area-inset-bottom, 0px)); }
+.sheet-head { display: flex; justify-content: space-between; align-items: start; gap: var(--s3); }
+.sheet-head h2 { font-size: 26px; }
+.x { border: 0; background: var(--ground); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: grid; place-items: center; flex: none; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); margin: 0; }
+.facts div { background: var(--ground); border-radius: var(--r1); padding: var(--s2) var(--s3); }
+.facts dt { font-size: 13px; color: var(--muted); }
+.facts dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: var(--s3); }
+legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; padding: 0; margin-bottom: var(--s2); }
+.field { display: grid; gap: 4px; }
+.field label, .field .lbl { font-size: 14px; font-weight: 700; }
+.field input, .field textarea { border: 1px solid var(--line); background: var(--ground); border-radius: var(--r1); padding: 10px 12px; min-height: 44px; width: 100%; }
+.field textarea { min-height: 64px; resize: vertical; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 12px; font-size: 14px; cursor: pointer; min-height: 34px; }
+.chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); font-weight: 700; }
+.save { border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-weight: 700; min-height: 48px; cursor: pointer; font-size: 17px; }
+.history { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s2); }
+.history li { display: flex; gap: var(--s3); align-items: start; justify-content: space-between; border-top: 1px solid var(--line); padding-top: var(--s2); font-size: 15px; }
+.history li > div { min-width: 0; }
+.history .when { font-weight: 700; font-variant-numeric: tabular-nums; }
+.history .del { border: 0; background: none; color: var(--muted); cursor: pointer; padding: 4px; font-size: 14px; text-decoration: underline; flex: none; }
+.toast {
+  position: fixed; inset-inline: 0; bottom: calc(var(--s5) + env(safe-area-inset-bottom, 0px)); margin: 0 auto; width: max-content; max-width: calc(100% - 32px);
+  background: var(--ink); color: var(--ground); padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 15px; z-index: 50;
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="he">
+  <header class="top">
+    <div class="brand">
+      <svg width="44" height="44" viewBox="110 70 300 380" aria-hidden="true">
+        <g fill="var(--spoon)"><ellipse cx="190" cy="176" rx="60" ry="84"/><rect x="173" y="236" width="34" height="200" rx="17"/></g>
+        <g fill="var(--accent)"><rect x="282" y="84" width="16" height="112" rx="8"/><rect x="310" y="84" width="16" height="112" rx="8"/><rect x="338" y="84" width="16" height="112" rx="8"/><rect x="366" y="84" width="16" height="112" rx="8"/><path d="M282 176h100v20c0 30-22 52-50 52s-50-22-50-52z"/><rect x="315" y="236" width="34" height="200" rx="17"/></g>
+      </svg>
+      <h1>הטעימות שלי</h1>
+    </div>
+    <p class="lead">התחלת טעימות ומרגישה אבודה? <b>פה רק רושמים.</b> מה נתת, מתי, כמה, וכמה פעמים.</p>
+    <p class="disclaimer" role="note"><strong>זו לא המלצה רפואית.</strong> האתר הוא כלי מעקב בלבד, שנבנה על ידי אמא ולא על ידי אשת מקצוע. הוא לא ממליץ מה לתת, מתי או כמה. כל החלטה והשימוש באתר באחריות ההורה בלבד. לכל שאלה: רופא/ת הילדים או טיפת חלב.</p>
+  </header>
+
+  <section class="child" aria-label="של מי היומן">
+    <div class="kid-tabs" id="kidTabs" role="group" aria-label="מעבר בין ילדים" hidden></div>
+    <form class="child-form" id="childForm">
+      <label for="childName">איך קוראים לקטן/ה?</label>
+      <div class="r">
+        <input id="childName" type="text" maxlength="30" placeholder="שם הילד/ה" autocomplete="off">
+        <button class="ghost" type="submit">שמירה</button>
+      </div>
+    </form>
+    <div class="child-show" id="childShow" hidden>
+      <span>היומן של <span id="childLabel"></span></span>
+      <button class="linkbtn" id="editChild" type="button">שינוי שם</button>
+      <button class="linkbtn" id="addKid" type="button">+ ילד/ה נוסף/ת</button>
+      <button class="linkbtn" id="delKid" type="button" hidden>מחיקת היומן</button>
+    </div>
+    <div class="confirm" id="delKidConfirm" role="alertdialog" aria-labelledby="delKidText" hidden>
+      <p id="delKidText" style="margin:0"></p>
+      <div class="row">
+        <button class="danger" type="button" id="delKidYes">כן, למחוק</button>
+        <button class="ghost" type="button" id="delKidNo">ביטול</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="example" id="exampleBar" hidden>
+    <span>הרשימה מלאה בנתוני דוגמה כדי שתראי איך זה נראה.</span>
+    <button class="linkbtn" id="clearExample" type="button">מחיקת הדוגמה והתחלה מאפס</button>
+  </div>
+
+  <section class="summary" aria-label="סיכום">
+    <div class="counts">
+      <span><strong id="cTried">0</strong>מאכלים נטעמו</span>
+      <span><strong id="cAll">0</strong>מתוך <span id="cAllTotal">0</span> אלרגנים</span>
+    </div>
+    <div class="allergen-strip" id="strip"></div>
+    <button class="primary meal-btn" type="button" id="openMeal">+ רישום ארוחה (כמה מאכלים יחד)</button>
+  </section>
+
+  <div class="controls" id="controls">
+    <nav class="tabs" aria-label="מעבר בין קטגוריות" id="tabs"></nav>
+  </div>
+  <div class="controls-2">
+    <input id="q" class="search" type="search" placeholder="חיפוש מאכל…" aria-label="חיפוש מאכל" autocomplete="off">
+    <div class="sortbar" role="group" aria-label="סדר הרשימה">
+      <span>סדר:</span>
+      <button class="chip" type="button" id="sortList">כמו ברשימה</button>
+      <button class="chip" type="button" id="sortLast">מה לא ניתן הכי הרבה זמן</button>
+    </div>
+  </div>
+
+  <main id="groups"></main>
+
+  <form class="add-own" id="addForm">
+    <input id="newFood" type="text" placeholder="מאכל שלא ברשימה? (למשל: גויאבה)" aria-label="שם מאכל חדש" maxlength="40" autocomplete="off">
+    <button class="ghost" type="submit">הוספה לרשימה</button>
+  </form>
+
+  <footer class="foot">
+    <section class="tools" aria-labelledby="hPrint">
+      <h2 id="hPrint">הדפסה ושיתוף</h2>
+      <div class="row">
+        <button class="ghost" id="openPrint" type="button">הדפסת הטעימות שלי</button>
+        <button class="ghost" id="openPrintEmpty" type="button">טבלה ריקה להדפסה</button>
+        <button class="ghost" id="copySummary" type="button">העתקת סיכום (לרופא/ה או לוואטסאפ)</button>
+      </div>
+    </section>
+
+    <section class="tools" aria-labelledby="hBackup">
+      <h2 id="hBackup">גיבוי</h2>
+      <div class="box">
+        <p>הרישומים שמורים רק בטלפון הזה. כדאי לשמור מדי פעם קובץ גיבוי, למשל לפני החלפת טלפון.</p>
+        <p class="meta" id="backupInfo"></p>
+        <div class="row">
+          <button class="ghost" id="doBackup" type="button">שמירת קובץ גיבוי</button>
+          <label class="ghost" for="restoreFile">שחזור מגיבוי<input class="vh" type="file" id="restoreFile" accept=".json,application/json"></label>
+        </div>
+        <div class="confirm" id="restoreConfirm" role="alertdialog" aria-labelledby="restoreText" hidden>
+          <p id="restoreText" style="margin:0"></p>
+          <div class="row">
+            <button class="danger" type="button" id="restoreYes">כן, לשחזר</button>
+            <button class="ghost" type="button" id="restoreNo">ביטול</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tools" aria-label="הוספה למסך הבית">
+      <div class="box howto">
+        <h2 class="howto-title">איך מוסיפים את ״הטעימות שלי״ למסך הבית?</h2>
+        <p><b>אייפון (Safari):</b> לוחצים על כפתור השיתוף (ריבוע עם חץ למעלה), בוחרים ״הוספה למסך הבית״ ולוחצים ״הוסף״.</p>
+        <p><b>אנדרואיד (Chrome):</b> לוחצים על שלוש הנקודות למעלה ובוחרים ״הוספה למסך הבית״ או ״התקנת אפליקציה״.</p>
+        <p>מעכשיו נכנסים מהאייקון, כמו לאפליקציה. הרישומים נשארים אותם רישומים.</p>
+        <button class="primary" type="button" id="installBtn" hidden>התקנה בלחיצה</button>
+      </div>
+    </section>
+    <p><b>אין באתר המלצה רפואית. השימוש באחריות ההורה בלבד.</b></p>
+    <p>הכול נשמר רק בטלפון הזה. אין הרשמה, ואף אחד אחר לא רואה את מה שרשמת.</p>
+    <p>בכל חשש לתגובה פני לרופא/ה. במצב חירום: מד״א <b>101</b>.</p>
+    <nav aria-label="מסמכים">
+      <a href="#terms">תנאי שימוש</a>
+      <a href="#privacy">מדיניות פרטיות</a>
+      <a href="#accessibility">הצהרת נגישות</a>
+    </nav>
+  </footer>
+</div>
+
+<section class="pv" id="printView" dir="rtl" lang="he" hidden aria-labelledby="pvTitle">
+  <div class="pv-actions">
+    <button class="primary" type="button" id="doPrint">הדפסה</button>
+    <button class="ghost" type="button" id="closePrint">חזרה ליומן</button>
+  </div>
+  <fieldset class="seg" aria-label="איזו טבלה להדפיס">
+    <label><input type="radio" name="pvMode" id="pvFilled" value="filled" checked> הטעימות שלי</label>
+    <label><input type="radio" name="pvMode" id="pvEmpty" value="empty"> טבלה ריקה למילוי ביד</label>
+  </fieldset>
+  <div class="pv-head">
+    <h2 id="pvTitle">יומן טעימות</h2>
+    <p id="pvDate"></p>
+    <p><b>מעקב אישי בלבד. אין בטבלה המלצה רפואית, והשימוש באחריות ההורה בלבד.</b></p>
+  </div>
+  <div class="tbl-wrap">
+    <table class="log">
+      <thead><tr><th scope="col">מאכל</th><th scope="col">פעם ראשונה</th><th scope="col">כמות בפעם הראשונה</th><th scope="col">כמה פעמים</th><th scope="col">פעם אחרונה</th><th scope="col">תגובה / הערות</th></tr></thead>
+      <tbody id="pvBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<div class="legal" id="legalView" dir="rtl" lang="he" hidden>
+  <div class="legal-nav">
+    <button class="primary" type="button" id="closeLegal">חזרה ליומן</button>
+    <a class="ghost" href="#terms" style="display:inline-flex;align-items:center;text-decoration:none">תנאי שימוש</a>
+    <a class="ghost" href="#privacy" style="display:inline-flex;align-items:center;text-decoration:none">פרטיות</a>
+    <a class="ghost" href="#accessibility" style="display:inline-flex;align-items:center;text-decoration:none">נגישות</a>
+  </div>
+
+  <article id="terms" aria-labelledby="h-terms">
+    <h2 id="h-terms" tabindex="-1">תנאי שימוש והבהרה</h2>
+    <p class="updated">עודכן לאחרונה: 06.11.2026</p>
+    <p class="short"><b>בקצרה:</b> ״הטעימות שלי״ הוא כלי מעקב, לא יועץ. הוא לא אומר לך מה לתת לתינוק, מתי או כמה. כל החלטה ושימוש באתר באחריות ההורה בלבד.</p>
+
+    <h3>1. מה האתר</h3>
+    <p>״הטעימות שלי״ (״האתר״) הוא כלי חינמי לרישום אישי של טעימות ומאכלים שתינוק קיבל: תאריך, כמות, מספר פעמים, תגובות והערות. את האתר בנתה אמא שעברה את תקופת הטעימות. היא לא רופאה, לא דיאטנית ולא אשת מקצוע בתחום הבריאות.</p>
+
+    <h3>2. האתר אינו ייעוץ רפואי</h3>
+    <p>שום דבר באתר אינו ייעוץ רפואי, תזונתי או מקצועי, ואינו תחליף לו. רשימות המאכלים באתר, כולל הקטגוריה ״אלרגנים״, נועדו רק לנוחות הרישום. הן לא המלצה לתת מאכל מסוים, ולא המלצה על סדר, גיל, כמות או תדירות.</p>
+    <p>לפני שמתחילים טעימות, ובכל שאלה על האכלה, אלרגיה או בריאות התינוק, יש לפנות לרופא/ת הילדים, לאחות בטיפת חלב או לאיש/אשת מקצוע מוסמך/ת. בכל חשש לתגובה אלרגית יש לפנות לטיפול רפואי. במצב חירום יש להתקשר למד״א 101.</p>
+
+    <h3>3. האחריות היא של ההורה</h3>
+    <p>כל החלטה על מה, מתי וכמה להאכיל את התינוק, וכל שימוש באתר ובמה שנרשם בו, הם באחריות ההורה או המטפל/ת בלבד.</p>
+
+    <h3>4. האתר ניתן ״כמות שהוא״</h3>
+    <p>האתר ניתן בחינם ו״כמות שהוא״ (AS IS). ייתכנו בו טעויות, תקלות או הפסקות. המידע שרשמת נשמר רק בדפדפן שבמכשיר שלך, ועלול להימחק, למשל בניקוי נתוני הדפדפן, במעבר לטלפון אחר או בגלישה פרטית. כדאי לשמור עותק מדי פעם בעזרת ״הדפסת הטעימות שלי״ או ״העתקת סיכום״.</p>
+
+    <h3>5. הגבלת אחריות</h3>
+    <p>במידה המרבית שהדין מתיר, בעלת האתר לא תישא באחריות לכל נזק, ישיר או עקיף, שייגרם בקשר לשימוש באתר, להסתמכות על מה שמופיע בו או על מה שנרשם בו, או לאובדן מידע.</p>
+
+    <h3>6. שימוש באתר</h3>
+    <p>האתר מיועד לשימוש אישי. אין להעתיק את האתר, את עיצובו או את התכנים שבו לשימוש מסחרי בלי אישור בכתב מבעלת האתר.</p>
+
+    <h3>7. שינויים</h3>
+    <p>ייתכן שהתנאים יתעדכנו מדי פעם. התאריך בראש העמוד מראה מתי עודכנו לאחרונה.</p>
+
+    <h3>8. דין חל</h3>
+    <p>על התנאים חל הדין הישראלי.</p>
+
+    <h3>9. יצירת קשר</h3>
+    <p>לשאלות ולהערות: <a href="mailto:Shuster.avital@gmail.com" dir="ltr">Shuster.avital@gmail.com</a></p>
+  </article>
+
+  <article id="privacy" aria-labelledby="h-privacy">
+    <h2 id="h-privacy" tabindex="-1">מדיניות פרטיות</h2>
+    <p class="updated">עודכן לאחרונה: 06.11.2026</p>
+    <p class="short"><b>בקצרה:</b> אנחנו לא אוספים עלייך או על התינוק שום מידע. כל מה שאת רושמת נשאר רק בטלפון שלך.</p>
+
+    <h3>מה נשמר ואיפה</h3>
+    <p>שם הילד/ה, המאכלים, התאריכים, הכמויות, התגובות וההערות שאת רושמת נשמרים רק בזיכרון הדפדפן במכשיר שלך (טכנולוגיה שנקראת localStorage). המידע הזה לא נשלח לבעלת האתר ולא לאף גורם אחר, ובעלת האתר לא יכולה לראות אותו.</p>
+
+    <h3>מה אין באתר</h3>
+    <ul>
+      <li>אין הרשמה ואין חשבון משתמש.</li>
+      <li>אין עוגיות (cookies).</li>
+      <li>אין כלי סטטיסטיקה, פיקסלים או מעקב.</li>
+      <li>אין פרסומות.</li>
+    </ul>
+    <p>אם זה ישתנה בעתיד, למשל אם יתווסף כלי סטטיסטיקה, נעדכן את המדיניות הזו לפני כן, ובמידת הצורך נבקש את הסכמתך.</p>
+
+    <h3>מי יכול לראות את מה שרשמת</h3>
+    <p>כל מי שיש לו גישה למכשיר ולדפדפן שבהם רשמת. כשאת מעתיקה סיכום או מדפיסה טבלה, את מחליטה למי להעביר אותם.</p>
+
+    <h3>איך מוחקים</h3>
+    <p>אפשר למחוק רישום מתוך חלון המאכל, או למחוק יומן שלם של ילד/ה. כדי למחוק הכול, אפשר לנקות את נתוני האתר בהגדרות הדפדפן.</p>
+
+    <h3>קובץ גיבוי</h3>
+    <p>כשאת שומרת קובץ גיבוי, הוא נשמר במכשיר שלך. את מחליטה איפה לשמור אותו ולמי לשלוח אותו. בעלת האתר לא מקבלת עותק.</p>
+
+    <h3>אחסון האתר</h3>
+    <p>האתר מתארח ב-GitHub Pages של חברת GitHub. כמו בכל אתר, ספק האחסון עשוי לרשום נתונים טכניים, כמו כתובת IP וסוג הדפדפן, כדי להפעיל ולאבטח את השירות. בעלת האתר לא משתמשת בנתונים האלה כדי לזהות אותך.</p>
+
+    <h3>אם הגעת מרשת חברתית</h3>
+    <p>אם קיבלת את הקישור בתגובה או בהודעה ברשת חברתית, המידע שמסרת שם (כמו שם המשתמש והתגובה שלך) כפוף למדיניות הפרטיות של אותה רשת ושל כלי שליחת ההודעות שבו נעשה שימוש.</p>
+
+    <h3>יצירת קשר</h3>
+    <p>לשאלות על פרטיות: <a href="mailto:Shuster.avital@gmail.com" dir="ltr">Shuster.avital@gmail.com</a></p>
+  </article>
+
+  <article id="accessibility" aria-labelledby="h-accessibility">
+    <h2 id="h-accessibility" tabindex="-1">הצהרת נגישות</h2>
+    <p class="updated">עודכן לאחרונה: 06.11.2026</p>
+    <p>חשוב לנו שכל הורה יוכל/תוכל להשתמש ב״הטעימות שלי״, כולל אנשים עם מוגבלות. האתר נבנה מתוך שאיפה לעמוד בהנחיות WCAG 2.1 ברמה AA, שעליהן מבוסס התקן הישראלי ת״י 5568.</p>
+
+    <h3>מה עשינו</h3>
+    <ul>
+      <li>מבנה כותרות ברור וכיווניות מימין לשמאל.</li>
+      <li>אפשר להשתמש בכל הכפתורים והשדות גם במקלדת, עם סימון ברור של המיקום.</li>
+      <li>לכפתורים ולשדות יש תוויות שקוראי מסך יכולים להקריא.</li>
+      <li>ניגודיות צבעים שנבדקה מול הסף המקובל, במצב בהיר ובמצב כהה.</li>
+      <li>אפשר להגדיל את הטקסט בהגדרות המכשיר בלי שהעמוד יישבר.</li>
+      <li>כשבמכשיר מוגדרת ״הפחתת תנועה״, האנימציות כבויות.</li>
+      <li>המידע לא מועבר רק באמצעות צבע. לדוגמה, ״נרשמה תגובה״ כתוב במילים.</li>
+    </ul>
+
+    <h3>מגבלות ידועות</h3>
+    <p>האתר נבדק בכלים אוטומטיים ובמעבר ידני בטלפון ובמחשב. עדיין לא נבדק על ידי מומחה/ית נגישות או עם כל סוגי קוראי המסך, ולכן ייתכן שחלקים ממנו אינם נגישים במלואם. אם נתקלת בבעיה, נשמח לדעת ולתקן.</p>
+
+    <h3>פנייה בנושא נגישות</h3>
+    <p>לפניות בנושא נגישות: <a href="mailto:Shuster.avital@gmail.com" dir="ltr">Shuster.avital@gmail.com</a>. כדאי לכתוב באיזה עמוד הייתה הבעיה, מה ניסית לעשות ובאיזה מכשיר ודפדפן השתמשת.</p>
+  </article>
+</div>
+
+<dialog id="sheet" aria-labelledby="sheetTitle" dir="rtl" lang="he">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div>
+        <h2 id="sheetTitle">מאכל</h2>
+        <div class="meta" id="sheetCat"></div>
+      </div>
+      <button class="x" type="button" id="closeSheet" aria-label="סגירה">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <dl class="facts">
+      <div><dt>פעם ראשונה</dt><dd id="fFirst">—</dd></div>
+      <div><dt>פעם אחרונה</dt><dd id="fLast">—</dd></div>
+      <div><dt>כמה פעמים</dt><dd id="fCount">0</dd></div>
+    </dl>
+    <form id="entryForm">
+      <fieldset>
+        <legend>רישום פעם חדשה</legend>
+        <div class="field">
+          <label for="eDate">תאריך</label>
+          <input id="eDate" type="date" required>
+        </div>
+        <div class="field">
+          <label for="eAmount">כמות</label>
+          <input id="eAmount" type="text" placeholder="במילים שלך, למשל: חצי כפית" maxlength="40" autocomplete="off">
+          <div class="chips" id="amountChips"></div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="rLbl">איך היה?</span>
+          <div class="chips" role="group" aria-labelledby="rLbl" id="reactChips"></div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="lLbl">אהב/ה? (לא חובה)</span>
+          <div class="chips" role="group" aria-labelledby="lLbl" id="likeChips"></div>
+        </div>
+        <div class="field">
+          <label for="eNote">הערה (לא חובה)</label>
+          <textarea id="eNote" maxlength="300" placeholder="למשל: מעורבב בבטטה, אהב/ה מאוד"></textarea>
+        </div>
+        <button class="save" type="submit">שמירה</button>
+      </fieldset>
+    </form>
+    <div>
+      <h3 style="font-size:18px;margin-bottom:8px">כל הפעמים</h3>
+      <ul class="history" id="history"></ul>
+    </div>
+    <button class="linkbtn own-remove" type="button" id="removeOwn" hidden>הסרה מהמאכלים שלי</button>
+  </div>
+</dialog>
+
+<dialog id="mealSheet" aria-labelledby="mealTitle" dir="rtl" lang="he">
+  <form class="sheet" id="mealForm">
+    <div class="sheet-head">
+      <div>
+        <h2 id="mealTitle">רישום ארוחה</h2>
+        <div class="meta">בוחרים את כל מה שהיה בארוחה, ושומרים פעם אחת.</div>
+      </div>
+      <button class="x" type="button" id="closeMeal" aria-label="סגירה">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="field">
+      <label for="mDate">תאריך</label>
+      <input id="mDate" type="date" required>
+    </div>
+    <div class="field">
+      <label for="mQ">מה היה בארוחה?</label>
+      <input id="mQ" type="search" placeholder="חיפוש מאכל…" autocomplete="off">
+      <div class="meal-count" id="mCount" aria-live="polite"></div>
+      <div class="meal-foods" id="mFoods"></div>
+    </div>
+    <div class="field">
+      <label for="mNote">הערה (לא חובה)</label>
+      <textarea id="mNote" maxlength="300" placeholder="למשל: ארוחת צהריים, הכול מעורבב"></textarea>
+    </div>
+    <button class="save" type="submit">שמירת הארוחה</button>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function () {
+  "use strict";
+  var CATS = [
+    { id: "own", label: "המאכלים שלי", hint: "מאכלים שהוספת בעצמך." },
+    { id: "allergen", label: "אלרגנים", hint: "המאכלים שמכונים בדרך כלל ׳אלרגנים נפוצים׳. כאן רק מסמנים מתי ניתנו." },
+    { id: "veg", label: "ירקות" },
+    { id: "fruit", label: "פירות" },
+    { id: "citrus", label: "פירות הדר" },
+    { id: "grain", label: "דגנים" },
+    { id: "protein", label: "חלבונים וקטניות" }
+  ];
+  var BASE = {
+    allergen: ["חלב ומוצריו", "ביצה", "בוטנים", "שומשום (טחינה)", "חיטה", "סויה", "דגים", "שקדים", "אגוזי מלך", "קשיו", "פיסטוק", "אגוזי לוז"],
+    veg: ["בטטה", "גזר", "דלעת", "קישוא", "ברוקולי", "כרובית", "אפונה", "תפוח אדמה", "שעועית ירוקה", "סלק", "תרד", "חציל", "פלפל אדום", "עגבנייה", "מלפפון", "תירס"],
+    fruit: ["אבוקדו", "בננה", "תפוח", "אגס", "אפרסק", "שזיף", "מנגו", "אבטיח", "מלון", "תות", "אוכמניות", "ענבים", "קיווי", "תמר"],
+    citrus: ["תפוז", "קלמנטינה", "מנדרינה", "אשכולית", "פומלה", "פומלית", "לימון"],
+    grain: ["דייסת אורז", "שיבולת שועל", "אורז", "פתיתים", "פסטה", "לחם", "קינואה", "כוסמת", "בורגול"],
+    protein: ["עוף", "הודו", "בקר", "עדשים", "חומוס", "שעועית", "טופו", "יוגורט", "גבינה לבנה"]
+  };
+  var AMOUNTS = ["טעימה קטנה", "¼ כפית", "½ כפית", "כפית", "כף", "כמה ביסים"];
+  var REACT = [
+    { id: "none", label: "שום דבר מיוחד" },
+    { id: "mild", label: "משהו קטן" },
+    { id: "yes", label: "הייתה תגובה" }
+  ];
+  var LIKE = [
+    { id: "yes", label: "אהב/ה" },
+    { id: "meh", label: "ככה ככה" },
+    { id: "no", label: "לא אהב/ה" }
+  ];
+  var KEY = "bis-rishon:v2", KEY_OLD = "bis-rishon:v1";
+  function likeLabel(id) { var l = LIKE.filter(function (x) { return x.id === id; })[0]; return l ? l.label : ""; }
+
+  function iso(d) { var z = new Date(d.getTime() - d.getTimezoneOffset() * 60000); return z.toISOString().slice(0, 10); }
+  function daysAgo(n) { var d = new Date(); d.setDate(d.getDate() - n); return iso(d); }
+  function todayIso() { return iso(new Date()); }
+  function slug(s) { return s.replace(/\s+/g, "-"); }
+
+  function newKid(name) {
+    return { id: "k" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), child: name || "", entries: {}, own: [], meals: [] };
+  }
+  function sample() {
+    var e = {};
+    function add(name, n, amount, react, note, like) { (e[name] = e[name] || []).push({ date: daysAgo(n), amount: amount || "", react: react || "none", like: like || "", note: note || "" }); }
+    add("בטטה", 20, "כפית", "none", "", "yes"); add("בטטה", 14, "כף"); add("בטטה", 11, "כמה ביסים", "none", "", "yes");
+    add("אבוקדו", 18, "½ כפית", "none", "", "meh"); add("אבוקדו", 10, "כפית"); add("אבוקדו", 3, "כף", "none", "", "yes");
+    add("שומשום (טחינה)", 12, "¼ כפית", "none", "מדולל במים, מעורבב בבטטה"); add("שומשום (טחינה)", 5, "½ כפית");
+    add("בוטנים", 16, "טעימה קטנה", "none", "במבה מומסת", "yes"); add("בוטנים", 9, "½ כפית"); add("בוטנים", 2, "כפית");
+    add("ביצה", 4, "¼ כפית", "mild", "קצת אודם סביב הפה, עבר אחרי חצי שעה");
+    add("גזר", 15, "כפית", "none", "", "no"); add("בננה", 8, "כמה ביסים", "none", "", "yes"); add("שיבולת שועל", 7, "כף"); add("קישוא", 11, "כפית");
+    var k = newKid(""); k.entries = e;
+    function meal(n, foods, note) {
+      var id = "m" + n; k.meals.push({ id: id, date: daysAgo(n), foods: foods, note: note || "" });
+      foods.forEach(function (f) { (e[f] = e[f] || []).push({ date: daysAgo(n), amount: "", react: "none", like: "", note: note || "", meal: id }); });
+    }
+    meal(6, ["בטטה", "שיבולת שועל", "בננה"], "ארוחת בוקר");
+    meal(1, ["בטטה", "קישוא", "עוף"], "צהריים, הכול מעורבב");
+    return { app: "bis-rishon", v: 2, kids: [k], active: k.id, example: true, sort: "list", backupAt: "" };
+  }
+  /* checks and cleans anything loaded from storage or from a backup file */
+  function normalize(d) {
+    if (!d || typeof d !== "object" || !Array.isArray(d.kids) || !d.kids.length) return null;
+    var ok = true;
+    d.kids = d.kids.filter(function (k) { return k && typeof k === "object"; }).map(function (k) {
+      var out = { id: typeof k.id === "string" && k.id ? k.id : newKid().id, child: typeof k.child === "string" ? k.child.slice(0, 30) : "", entries: {}, own: [], meals: [] };
+      if (Array.isArray(k.meals)) out.meals = k.meals.filter(function (m) { return m && typeof m.id === "string" && /^\d{4}-\d{2}-\d{2}$/.test(m.date) && Array.isArray(m.foods); }).map(function (m) {
+        return { id: m.id.slice(0, 40), date: m.date, foods: m.foods.filter(function (f) { return typeof f === "string"; }).map(function (f) { return f.slice(0, 40); }), note: String(m.note || "").slice(0, 300) };
+      });
+      if (Array.isArray(k.own)) out.own = k.own.filter(function (x) { return typeof x === "string" && x.trim(); }).map(function (x) { return x.slice(0, 40); });
+      if (k.entries && typeof k.entries === "object") Object.keys(k.entries).forEach(function (n) {
+        if (!Array.isArray(k.entries[n])) return;
+        out.entries[n.slice(0, 40)] = k.entries[n].filter(function (e) { return e && /^\d{4}-\d{2}-\d{2}$/.test(e.date); }).map(function (e) {
+          return { date: e.date, amount: String(e.amount || "").slice(0, 40),
+            react: ["none", "mild", "yes"].indexOf(e.react) !== -1 ? e.react : "none",
+            like: ["yes", "meh", "no"].indexOf(e.like) !== -1 ? e.like : "", note: String(e.note || "").slice(0, 300),
+            meal: typeof e.meal === "string" ? e.meal.slice(0, 40) : "" };
+        });
+      });
+      return out;
+    });
+    if (!d.kids.length) return null;
+    return { app: "bis-rishon", v: 2, kids: d.kids,
+      active: d.kids.some(function (k) { return k.id === d.active; }) ? d.active : d.kids[0].id,
+      example: d.example === true, sort: d.sort === "last" ? "last" : "list",
+      backupAt: typeof d.backupAt === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d.backupAt) ? d.backupAt : "" };
+  }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) { var d = normalize(JSON.parse(raw)); if (d) return d; }
+      var old = localStorage.getItem(KEY_OLD);
+      if (old) {
+        var o = JSON.parse(old);
+        var m = normalize({ kids: [{ child: o.child, entries: o.entries, own: o.own }], example: o.example });
+        if (m) return m;
+      }
+    } catch (err) {}
+    return sample();
+  }
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (err) {} }
+  var db = load();
+  function kidById(id) { return db.kids.filter(function (k) { return k.id === id; })[0] || db.kids[0]; }
+  var state = kidById(db.active);   /* the open child's diary: child, entries, own */
+
+  var active = null;
+  var query = "";
+  var current = null;
+  var chosenReact = "none";
+  var chosenLike = "";
+
+  function foodsOf(cat) { return cat === "own" ? state.own : BASE[cat]; }
+  function catOf(name) {
+    for (var c in BASE) if (BASE[c].indexOf(name) !== -1) return c;
+    return "own";
+  }
+  function entriesOf(name) {
+    return (state.entries[name] || []).slice().sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+  }
+  function fmtDate(s) { var p = s.split("-"); return p[2] + "." + p[1]; }
+  function rel(s) {
+    var a = new Date(s + "T00:00:00"), b = new Date(todayIso() + "T00:00:00");
+    var n = Math.round((b - a) / 86400000);
+    if (n <= 0) return "היום";
+    if (n === 1) return "אתמול";
+    if (n === 2) return "שלשום";
+    return "לפני " + n + " ימים";
+  }
+
+  var el = function (id) { return document.getElementById(id); };
+
+  /* tabs jump to a category; scrolling (down or up) moves the highlighted tab */
+  function sections() { return Array.prototype.slice.call(el("groups").querySelectorAll("section.group")); }
+  function renderTabs() {
+    var t = el("tabs"); t.textContent = "";
+    sections().forEach(function (sec) {
+      var id = sec.getAttribute("data-cat");
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "tab"; b.textContent = sec.getAttribute("data-label");
+      b.setAttribute("data-cat", id);
+      b.setAttribute("aria-pressed", String(active === id));
+      b.addEventListener("click", function () { jumpTo(id); });
+      t.appendChild(b);
+    });
+  }
+  function offset() { return el("controls").offsetHeight + 8; }
+  function jumpTo(id) {
+    var sec = el("cat-" + id); if (!sec) return;
+    var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var y = sec.getBoundingClientRect().top + window.scrollY - offset();
+    setActive(id);
+    window.scrollTo({ top: Math.max(0, y), behavior: reduce ? "auto" : "smooth" });
+  }
+  function setActive(id) {
+    if (active === id) return;
+    active = id;
+    var btns = el("tabs").querySelectorAll(".tab");
+    Array.prototype.forEach.call(btns, function (b) {
+      var on = b.getAttribute("data-cat") === id;
+      b.setAttribute("aria-pressed", String(on));
+      if (on) {
+        var bar = el("tabs"), br = bar.getBoundingClientRect(), r = b.getBoundingClientRect();
+        if (r.left < br.left || r.right > br.right) bar.scrollBy({ left: (r.left + r.width / 2) - (br.left + br.width / 2), behavior: "smooth" });
+      }
+    });
+  }
+  function spy() {
+    var secs = sections(); if (!secs.length) return;
+    var line = offset() + 4, cur = secs[0];
+    secs.forEach(function (s) { if (s.getBoundingClientRect().top <= line) cur = s; });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+      var lastVisible = secs.filter(function (s) { return s.getBoundingClientRect().top < window.innerHeight; });
+      if (lastVisible.length && lastVisible[lastVisible.length - 1].getBoundingClientRect().top > line) cur = lastVisible[lastVisible.length - 1];
+    }
+    setActive(cur.getAttribute("data-cat"));
+  }
+  var ticking = false;
+  window.addEventListener("scroll", function () {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () { ticking = false; spy(); });
+  }, { passive: true });
+  window.addEventListener("resize", spy);
+
+  /* children: each has its own diary */
+  var editingName = false;
+  function renderChild() {
+    var tabs = el("kidTabs"); tabs.textContent = "";
+    tabs.hidden = db.kids.length < 2;
+    db.kids.forEach(function (k) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "tab";
+      b.textContent = k.child || "בלי שם";
+      b.setAttribute("aria-pressed", String(k.id === state.id));
+      b.addEventListener("click", function () { if (k.id !== state.id) switchKid(k.id); });
+      tabs.appendChild(b);
+    });
+    var showForm = !state.child || editingName;
+    el("childForm").hidden = !showForm;
+    el("childShow").hidden = showForm;
+    el("childLabel").textContent = state.child;
+    el("delKid").hidden = db.kids.length < 2;
+  }
+  function switchKid(id) {
+    db.active = id; state = kidById(id); persist();
+    editingName = false; el("delKidConfirm").hidden = true;
+    query = ""; el("q").value = ""; renderAll(); toast(state.child ? "היומן של " + state.child : "יומן חדש");
+  }
+  el("childForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var v = el("childName").value.trim();
+    if (!v) { el("childName").focus(); return; }
+    state.child = v; editingName = false; persist(); renderChild(); toast("נשמר. היומן של " + v);
+  });
+  el("editChild").addEventListener("click", function () {
+    editingName = true; el("childName").value = state.child; renderChild(); el("childName").focus();
+  });
+  el("addKid").addEventListener("click", function () {
+    var k = newKid(""); db.kids.push(k); el("childName").value = "";
+    switchKid(k.id); el("childName").focus();
+  });
+  el("delKid").addEventListener("click", function () {
+    el("delKidText").textContent = "למחוק את היומן של " + (state.child || "הילד/ה") + "? כל הרישומים שבו יימחקו מהטלפון.";
+    el("delKidConfirm").hidden = false; el("delKidNo").focus();
+  });
+  el("delKidNo").addEventListener("click", function () { el("delKidConfirm").hidden = true; el("delKid").focus(); });
+  el("delKidYes").addEventListener("click", function () {
+    var name = state.child;
+    db.kids = db.kids.filter(function (k) { return k.id !== state.id; });
+    switchKid(db.kids[0].id); toast("היומן של " + (name || "הילד/ה") + " נמחק");
+  });
+
+  function renderSummary() {
+    var tried = Object.keys(state.entries).filter(function (k) { return state.entries[k].length; });
+    el("cTried").textContent = tried.length;
+    var al = BASE.allergen;
+    el("cAll").textContent = al.filter(function (a) { return (state.entries[a] || []).length; }).length;
+    el("cAllTotal").textContent = al.length;
+    var s = el("strip"); s.textContent = "";
+    al.forEach(function (a) {
+      var on = (state.entries[a] || []).length > 0;
+      var p = document.createElement("span");
+      p.className = "pill" + (on ? " on" : "");
+      p.innerHTML = '<span class="d" aria-hidden="true"></span>';
+      p.appendChild(document.createTextNode(a.replace(" (טחינה)", "")));
+      p.setAttribute("aria-label", a + (on ? ": נטעם" : ": עוד לא"));
+      s.appendChild(p);
+    });
+    el("exampleBar").hidden = !db.example;
+  }
+
+  function spoons(n) {
+    var w = document.createElement("span"); w.className = "spoons"; w.setAttribute("aria-label", n + " פעמים");
+    var shown = Math.max(5, Math.min(n, 5));
+    for (var i = 0; i < shown; i++) { var d = document.createElement("i"); if (i < n) d.className = "f"; w.appendChild(d); }
+    if (n > 5) { var b = document.createElement("b"); b.textContent = "+" + (n - 5); w.appendChild(b); }
+    return w;
+  }
+
+  function row(name) {
+    var list = entriesOf(name);
+    var li = document.createElement("li"); li.className = "item";
+    var open = document.createElement("button"); open.type = "button"; open.className = "open";
+    var nm = document.createElement("span"); nm.className = "name"; nm.textContent = name;
+    if (list.some(function (e) { return e.react !== "none"; })) {
+      var f = document.createElement("span"); f.className = "flag"; f.textContent = "נרשמה תגובה"; nm.appendChild(f);
+    }
+    var meta = document.createElement("span"); meta.className = "meta";
+    if (list.length) {
+      var last = list[list.length - 1];
+      meta.textContent = "ראשונה " + fmtDate(list[0].date) + " · אחרונה " + rel(last.date) + (last.amount ? " · " + last.amount : "") + (last.like ? " · " + likeLabel(last.like) : "");
+    } else meta.textContent = "עוד לא";
+    open.appendChild(nm); open.appendChild(spoons(list.length)); open.appendChild(meta);
+    open.addEventListener("click", function () { openSheet(name); });
+    var t = document.createElement("button"); t.type = "button";
+    var givenToday = list.some(function (e) { return e.date === todayIso(); });
+    t.className = "today" + (givenToday ? " done" : "");
+    t.textContent = givenToday ? "✓ היום" : "+ נתתי היום";
+    t.setAttribute("aria-label", (givenToday ? "נרשם היום: " : "רישום שנתתי היום: ") + name);
+    t.addEventListener("click", function () {
+      if (givenToday) { openSheet(name); return; }
+      add(name, { date: todayIso(), amount: "", react: "none", like: "", note: "" });
+      toast("נרשם: " + name + " היום");
+    });
+    li.appendChild(open); li.appendChild(t);
+    return li;
+  }
+
+  /* sort: as listed, or what was given longest ago first (never given stays last, in list order) */
+  function lastDate(n) {
+    var l = state.entries[n]; if (!l || !l.length) return "";
+    return l.reduce(function (m, e) { return e.date > m ? e.date : m; }, "");
+  }
+  function sortFoods(foods) {
+    if (db.sort !== "last") return foods;
+    var tried = foods.filter(lastDate).sort(function (a, b) { var x = lastDate(a), y = lastDate(b); return x < y ? -1 : x > y ? 1 : 0; });
+    return tried.concat(foods.filter(function (n) { return !lastDate(n); }));
+  }
+  function renderSort() {
+    el("sortList").setAttribute("aria-pressed", String(db.sort !== "last"));
+    el("sortLast").setAttribute("aria-pressed", String(db.sort === "last"));
+  }
+  el("sortList").addEventListener("click", function () { db.sort = "list"; persist(); renderSort(); renderList(); });
+  el("sortLast").addEventListener("click", function () { db.sort = "last"; persist(); renderSort(); renderList(); });
+
+  /* "my meals": every meal logged with "רישום ארוחה", newest first */
+  var showAllMeals = false;
+  function mealDate(m) { return rel(m.date) + " · " + fmtDate(m.date); }
+  function logMeal(date, foods, note) {
+    var id = "m" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+    state.meals.push({ id: id, date: date, foods: foods.slice(), note: note });
+    foods.forEach(function (n) { (state.entries[n] = state.entries[n] || []).push({ date: date, amount: "", react: "none", like: "", note: note, meal: id }); });
+  }
+  function deleteMeal(m) {
+    state.meals = state.meals.filter(function (x) { return x.id !== m.id; });
+    Object.keys(state.entries).forEach(function (n) {
+      state.entries[n] = state.entries[n].filter(function (e) { return e.meal !== m.id; });
+    });
+  }
+  function mealsSection() {
+    var meals = state.meals.filter(function (m) {
+      return !query || m.foods.some(function (f) { return f.indexOf(query) !== -1; });
+    }).slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+    if (!meals.length) return null;
+    var sec = document.createElement("section"); sec.className = "group";
+    sec.id = "cat-meals"; sec.setAttribute("data-cat", "meals"); sec.setAttribute("data-label", "הארוחות שלי");
+    var h = document.createElement("h2"); h.textContent = "הארוחות שלי"; sec.appendChild(h);
+    var ul = document.createElement("ul"); ul.className = "meals";
+    var shown = showAllMeals || query ? meals : meals.slice(0, 3);
+    shown.forEach(function (m) {
+      var li = document.createElement("li"); li.className = "meal";
+      var w = document.createElement("span"); w.className = "when"; w.textContent = mealDate(m); li.appendChild(w);
+      var f = document.createElement("span"); f.className = "foods"; f.textContent = m.foods.join(", "); li.appendChild(f);
+      if (m.note) { var n = document.createElement("span"); n.className = "meta"; n.textContent = m.note; li.appendChild(n); }
+      var acts = document.createElement("div"); acts.className = "acts";
+      var again = document.createElement("button"); again.type = "button"; again.className = "linkbtn"; again.textContent = "אותה ארוחה שוב היום";
+      again.addEventListener("click", function () {
+        logMeal(todayIso(), m.foods, ""); persist(); renderAll(); toast("נרשמה ארוחה: " + m.foods.length + " מאכלים");
+      });
+      var del = document.createElement("button"); del.type = "button"; del.className = "linkbtn"; del.textContent = "מחיקה";
+      del.setAttribute("aria-label", "מחיקת הארוחה מ-" + fmtDate(m.date));
+      var armed = null;
+      del.addEventListener("click", function () {
+        if (!armed) {
+          del.textContent = "ללחוץ שוב כדי למחוק את הארוחה וכל הרישומים שלה";
+          armed = setTimeout(function () { armed = null; del.textContent = "מחיקה"; }, 4000);
+          return;
+        }
+        clearTimeout(armed); deleteMeal(m); persist(); renderAll(); toast("הארוחה נמחקה");
+      });
+      acts.appendChild(again); acts.appendChild(del); li.appendChild(acts);
+      ul.appendChild(li);
+    });
+    sec.appendChild(ul);
+    if (!query && meals.length > 3) {
+      var more = document.createElement("button"); more.type = "button"; more.className = "linkbtn more";
+      more.textContent = showAllMeals ? "להציג רק את האחרונות" : "להציג את כל " + meals.length + " הארוחות";
+      more.addEventListener("click", function () { showAllMeals = !showAllMeals; renderList(); });
+      sec.appendChild(more);
+    }
+    return sec;
+  }
+
+  function renderList() {
+    var g = el("groups"); g.textContent = "";
+    var any = false;
+    var ms = mealsSection(); if (ms) { g.appendChild(ms); any = true; }
+    CATS.forEach(function (c) {
+      var foods = sortFoods((foodsOf(c.id) || []).filter(function (n) { return !query || n.indexOf(query) !== -1; }));
+      if (!foods.length) return;
+      any = true;
+      var sec = document.createElement("section"); sec.className = "group";
+      sec.id = "cat-" + c.id; sec.setAttribute("data-cat", c.id); sec.setAttribute("data-label", c.label);
+      var h = document.createElement("h2"); h.textContent = c.label; sec.appendChild(h);
+      if (c.hint) { var p = document.createElement("p"); p.className = "hint"; p.textContent = c.hint; sec.appendChild(p); }
+      var ul = document.createElement("ul"); ul.className = "list";
+      foods.forEach(function (n) { ul.appendChild(row(n)); });
+      sec.appendChild(ul); g.appendChild(sec);
+    });
+    if (!any) {
+      var e = document.createElement("p"); e.className = "empty";
+      e.textContent = query ? "לא מצאתי ׳" + query + "׳. אפשר להוסיף אותו למטה." : "אין כאן עדיין מאכלים.";
+      g.appendChild(e);
+    }
+    var keep = active; active = null;
+    renderTabs();
+    if (keep && el("cat-" + keep)) setActive(keep); else spy();
+  }
+
+  function renderAll() { renderChild(); renderSummary(); renderSort(); renderList(); renderBackup(); if (current) renderSheet(); }
+
+  function add(name, entry) {
+    (state.entries[name] = state.entries[name] || []).push(entry);
+    persist(); renderAll();
+  }
+
+  /* sheet */
+  function chips(container, items, selected, onPick) {
+    container.textContent = "";
+    items.forEach(function (it) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "chip";
+      b.textContent = it.label; b.setAttribute("aria-pressed", String(selected === it.id));
+      b.addEventListener("click", function () { onPick(it.id); });
+      container.appendChild(b);
+    });
+  }
+  function renderReact() { chips(el("reactChips"), REACT, chosenReact, function (id) { chosenReact = id; renderReact(); }); }
+  function renderLike() { chips(el("likeChips"), LIKE, chosenLike, function (id) { chosenLike = chosenLike === id ? "" : id; renderLike(); }); }
+  function renderAmounts() {
+    var v = el("eAmount").value;
+    chips(el("amountChips"), AMOUNTS.map(function (a) { return { id: a, label: a }; }), v, function (id) { el("eAmount").value = id; renderAmounts(); });
+  }
+  function renderSheet() {
+    var list = entriesOf(current);
+    el("sheetTitle").textContent = current;
+    var c = CATS.filter(function (x) { return x.id === catOf(current); })[0];
+    el("sheetCat").textContent = c ? c.label : "";
+    el("fFirst").textContent = list.length ? fmtDate(list[0].date) : "—";
+    el("fLast").textContent = list.length ? rel(list[list.length - 1].date) : "—";
+    el("fCount").textContent = list.length;
+    el("removeOwn").hidden = state.own.indexOf(current) === -1;
+    var h = el("history"); h.textContent = "";
+    if (!list.length) { var li0 = document.createElement("li"); li0.textContent = "עוד לא נרשם כלום."; h.appendChild(li0); }
+    list.slice().reverse().forEach(function (e) {
+      var li = document.createElement("li");
+      var d = document.createElement("div");
+      var w = document.createElement("span"); w.className = "when"; w.textContent = fmtDate(e.date);
+      d.appendChild(w);
+      var parts = [];
+      if (e.amount) parts.push(e.amount);
+      var r = REACT.filter(function (x) { return x.id === e.react; })[0];
+      if (r && e.react !== "none") parts.push(r.label);
+      if (e.like) parts.push(likeLabel(e.like));
+      if (parts.length) d.appendChild(document.createTextNode(" · " + parts.join(" · ")));
+      if (e.note) { var n = document.createElement("div"); n.className = "meta"; n.textContent = e.note; d.appendChild(n); }
+      var del = document.createElement("button"); del.type = "button"; del.className = "del"; del.textContent = "מחיקה";
+      del.setAttribute("aria-label", "מחיקת הרישום מ-" + fmtDate(e.date));
+      del.addEventListener("click", function () {
+        var arr = state.entries[current]; var i = arr.indexOf(e);
+        if (i !== -1) arr.splice(i, 1);
+        if (e.meal) {
+          var food = current;
+          state.meals.forEach(function (m) { if (m.id === e.meal) m.foods = m.foods.filter(function (f) { return f !== food; }); });
+          state.meals = state.meals.filter(function (m) { return m.foods.length; });
+        }
+        persist(); renderAll(); toast("נמחק");
+      });
+      li.appendChild(d); li.appendChild(del); h.appendChild(li);
+    });
+  }
+  function openSheet(name) {
+    current = name; chosenReact = "none"; chosenLike = "";
+    el("eDate").value = todayIso(); el("eDate").max = todayIso();
+    el("eAmount").value = ""; el("eNote").value = "";
+    renderReact(); renderLike(); renderAmounts(); renderSheet();
+    var d = el("sheet");
+    if (d.showModal) d.showModal(); else d.setAttribute("open", "");
+  }
+  function closeSheet() { var d = el("sheet"); if (d.close) d.close(); else d.removeAttribute("open"); }
+  el("sheet").addEventListener("close", function () { current = null; resetRemoveOwn(); });
+  var removeArmed = null;
+  function resetRemoveOwn() { clearTimeout(removeArmed); removeArmed = null; el("removeOwn").textContent = "הסרה מהמאכלים שלי"; }
+  el("removeOwn").addEventListener("click", function () {
+    if (!removeArmed) {
+      var n = (state.entries[current] || []).length;
+      el("removeOwn").textContent = n ? "ללחוץ שוב כדי להסיר, כולל " + n + " רישומים" : "ללחוץ שוב כדי להסיר";
+      removeArmed = setTimeout(resetRemoveOwn, 4000);
+      return;
+    }
+    var name = current;
+    state.own = state.own.filter(function (x) { return x !== name; });
+    delete state.entries[name];
+    state.meals.forEach(function (m) { m.foods = m.foods.filter(function (f) { return f !== name; }); });
+    state.meals = state.meals.filter(function (m) { return m.foods.length; });
+    resetRemoveOwn(); closeSheet(); persist(); renderAll(); toast("׳" + name + "׳ הוסר מהמאכלים שלי");
+  });
+  el("closeSheet").addEventListener("click", closeSheet);
+  el("sheet").addEventListener("click", function (ev) { if (ev.target === ev.currentTarget) closeSheet(); });
+  el("eAmount").addEventListener("input", renderAmounts);
+  el("entryForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var date = el("eDate").value || todayIso();
+    add(current, { date: date, amount: el("eAmount").value.trim(), react: chosenReact, like: chosenLike, note: el("eNote").value.trim() });
+    el("eAmount").value = ""; el("eNote").value = ""; chosenReact = "none"; chosenLike = ""; renderReact(); renderLike(); renderAmounts();
+    toast("נשמר");
+  });
+
+  /* meal: several foods logged at once */
+  var mealSel = [];
+  function renderMealFoods() {
+    var box = el("mFoods"); box.textContent = "";
+    var q = el("mQ").value.trim();
+    CATS.forEach(function (c) {
+      var foods = (foodsOf(c.id) || []).filter(function (n) { return !q || n.indexOf(q) !== -1; });
+      if (!foods.length) return;
+      var wrap = document.createElement("div");
+      var h = document.createElement("h4"); h.textContent = c.label; wrap.appendChild(h);
+      var row = document.createElement("div"); row.className = "chips";
+      foods.forEach(function (n) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = n;
+        b.setAttribute("aria-pressed", String(mealSel.indexOf(n) !== -1));
+        b.addEventListener("click", function () {
+          var i = mealSel.indexOf(n);
+          if (i === -1) mealSel.push(n); else mealSel.splice(i, 1);
+          b.setAttribute("aria-pressed", String(i === -1)); renderMealCount();
+        });
+        row.appendChild(b);
+      });
+      wrap.appendChild(row); box.appendChild(wrap);
+    });
+    var exact = q && CATS.some(function (c) { return (foodsOf(c.id) || []).indexOf(q) !== -1; });
+    if (q && !exact) {
+      var addBtn = document.createElement("button"); addBtn.type = "button"; addBtn.className = "ghost";
+      addBtn.textContent = "+ הוספת ׳" + q + "׳ למאכלים שלי";
+      addBtn.addEventListener("click", function () {
+        var v = q.slice(0, 40);
+        state.own.push(v); mealSel.push(v); persist();
+        el("mQ").value = ""; renderMealFoods(); renderAll(); toast("נוסף למאכלים שלי: " + v);
+      });
+      box.insertBefore(addBtn, box.firstChild);
+    }
+    renderMealCount();
+  }
+  function renderMealCount() {
+    el("mCount").textContent = mealSel.length ? "נבחרו " + mealSel.length + ": " + mealSel.join(", ") : "עוד לא נבחר מאכל.";
+  }
+  el("openMeal").addEventListener("click", function () {
+    mealSel = []; el("mDate").value = todayIso(); el("mDate").max = todayIso(); el("mQ").value = ""; el("mNote").value = "";
+    renderMealFoods();
+    var d = el("mealSheet"); if (d.showModal) d.showModal(); else d.setAttribute("open", "");
+  });
+  function closeMeal() { var d = el("mealSheet"); if (d.close) d.close(); else d.removeAttribute("open"); }
+  el("closeMeal").addEventListener("click", closeMeal);
+  el("mealSheet").addEventListener("click", function (ev) { if (ev.target === ev.currentTarget) closeMeal(); });
+  el("mQ").addEventListener("input", renderMealFoods);
+  el("mealForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    if (!mealSel.length) { toast("צריך לבחור לפחות מאכל אחד"); el("mQ").focus(); return; }
+    var date = el("mDate").value || todayIso(), note = el("mNote").value.trim();
+    logMeal(date, mealSel, note);
+    var count = mealSel.length; mealSel = [];
+    persist(); renderAll(); closeMeal(); jumpTo("meals"); toast("נרשמה ארוחה: " + count + " מאכלים");
+  });
+
+  /* add own food */
+  el("addForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var v = el("newFood").value.trim();
+    if (!v) { el("newFood").focus(); return; }
+    var exists = catOf(v) !== "own" || state.own.indexOf(v) !== -1;
+    if (exists) { query = v; el("q").value = v; renderAll(); toast("׳" + v + "׳ כבר ברשימה"); return; }
+    state.own.push(v); persist();
+    el("newFood").value = ""; query = ""; el("q").value = "";
+    renderAll(); jumpTo("own"); toast("נוסף: " + v);
+  });
+
+  el("q").addEventListener("input", function () { query = el("q").value.trim(); renderList(); });
+
+  el("clearExample").addEventListener("click", function () {
+    state.entries = {}; state.own = []; state.meals = []; db.example = false; persist(); renderAll(); toast("הרשימה ריקה. אפשר להתחיל");
+  });
+
+  /* summary text */
+  function summaryText() {
+    var lines = [(state.child ? "יומן הטעימות של " + state.child : "יומן טעימות") + " (הטעימות שלי)", ""];
+    CATS.forEach(function (c) {
+      var foods = (foodsOf(c.id) || []).filter(function (n) { return (state.entries[n] || []).length; });
+      if (!foods.length) return;
+      lines.push(c.label + ":");
+      foods.forEach(function (n) {
+        var l = entriesOf(n);
+        var react = l.filter(function (e) { return e.react !== "none"; });
+        var s = "• " + n + ": " + l.length + " פעמים, ראשונה " + fmtDate(l[0].date) + ", אחרונה " + fmtDate(l[l.length - 1].date);
+        if (react.length) s += " (נרשמה תגובה: " + react.map(function (e) { return fmtDate(e.date) + (e.note ? " - " + e.note : ""); }).join("; ") + ")";
+        var lastLike = l.filter(function (e) { return e.like; }).pop();
+        if (lastLike) s += ". " + likeLabel(lastLike.like);
+        lines.push(s);
+      });
+      lines.push("");
+    });
+    lines.push("* מעקב אישי בלבד. לא המלצה רפואית.");
+    return lines.join("\n").trim();
+  }
+  el("copySummary").addEventListener("click", function () {
+    var text = summaryText();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { toast("הסיכום הועתק"); }, function () { toast("לא הצלחתי להעתיק"); });
+    } else toast("לא הצלחתי להעתיק");
+  });
+
+  /* printable table */
+  function fullDate(s) { var p = s.split("-"); return p[2] + "." + p[1] + "." + p[0].slice(2); }
+  function td(tr, text, cls) { var c = document.createElement("td"); c.textContent = text; if (cls) c.className = cls; tr.appendChild(c); }
+  function blankRow(body, name) {
+    var tr = document.createElement("tr"); tr.className = "blank";
+    var nameCell = document.createElement("th"); nameCell.scope = "row"; nameCell.textContent = name; tr.appendChild(nameCell);
+    td(tr, ""); td(tr, ""); td(tr, "○○○○○○", "ticks"); td(tr, ""); td(tr, "");
+    body.appendChild(tr);
+  }
+  function catRow(body, label) {
+    var hr = document.createElement("tr"); var th = document.createElement("th");
+    th.colSpan = 6; th.className = "cat"; th.scope = "colgroup"; th.textContent = label; hr.appendChild(th); body.appendChild(hr);
+  }
+  function renderPrint() {
+    var empty = el("pvEmpty").checked;
+    var name = state.child;
+    el("pvTitle").textContent = empty
+      ? (name ? "טבלת הטעימות של " + name : "טבלת טעימות")
+      : (name ? "יומן הטעימות של " + name : "יומן טעימות");
+    el("pvDate").textContent = empty ? (name ? "" : "שם: ________________   ") + "בכל פעם שנותנים, מסמנים עיגול בעמודה ׳כמה פעמים׳." : "הודפס ב-" + fullDate(todayIso());
+    var body = el("pvBody"); body.textContent = "";
+    if (empty) {
+      CATS.forEach(function (c) {
+        var foods = foodsOf(c.id) || [];
+        if (!foods.length) return;
+        catRow(body, c.label);
+        foods.forEach(function (n) { blankRow(body, n); });
+      });
+      catRow(body, "מאכלים נוספים");
+      for (var k = 0; k < 8; k++) blankRow(body, "");
+      return;
+    }
+    CATS.forEach(function (c) {
+      var foods = (foodsOf(c.id) || []).filter(function (n) { return (state.entries[n] || []).length; });
+      if (!foods.length) return;
+      catRow(body, c.label);
+      foods.forEach(function (n) {
+        var l = entriesOf(n); var tr = document.createElement("tr");
+        var nameCell = document.createElement("th"); nameCell.scope = "row"; nameCell.textContent = n; tr.appendChild(nameCell);
+        var notes = l.filter(function (e) { return e.react !== "none" || e.note || e.like; }).map(function (e) {
+          var r = REACT.filter(function (x) { return x.id === e.react; })[0];
+          return fmtDate(e.date) + ": " + [e.react !== "none" && r ? r.label : "", likeLabel(e.like), e.note].filter(Boolean).join(", ");
+        });
+        td(tr, fullDate(l[0].date), "n"); td(tr, l[0].amount || ""); td(tr, String(l.length), "n");
+        td(tr, fullDate(l[l.length - 1].date), "n"); td(tr, notes.join(" | "));
+        body.appendChild(tr);
+      });
+    });
+    if (!body.children.length) {
+      var tr = document.createElement("tr"); var c = document.createElement("td"); c.colSpan = 6;
+      c.textContent = "עוד לא נרשם כלום. אפשר לבחור למעלה ׳טבלה ריקה למילוי ביד׳."; tr.appendChild(c); body.appendChild(tr);
+    }
+  }
+  var lastY = 0;
+  function openPrint(mode) {
+    el(mode === "empty" ? "pvEmpty" : "pvFilled").checked = true;
+    lastY = window.scrollY; renderPrint();
+    document.querySelector(".wrap").hidden = true; el("printView").hidden = false; window.scrollTo(0, 0); el("doPrint").focus();
+  }
+  el("openPrint").addEventListener("click", function () { openPrint("filled"); });
+  el("openPrintEmpty").addEventListener("click", function () { openPrint("empty"); });
+  el("pvFilled").addEventListener("change", renderPrint);
+  el("pvEmpty").addEventListener("change", renderPrint);
+  el("closePrint").addEventListener("click", function () {
+    el("printView").hidden = true; document.querySelector(".wrap").hidden = false; window.scrollTo(0, lastY); el("openPrint").focus();
+  });
+  /* legal pages: #terms, #privacy, #accessibility */
+  var LEGAL = { terms: "terms", privacy: "privacy", accessibility: "accessibility" };
+  var legalBackY = 0;
+  function route() {
+    var h = (location.hash || "").slice(1);
+    var wrap = document.querySelector(".wrap");
+    if (LEGAL[h]) {
+      if (!wrap.hidden) legalBackY = window.scrollY;
+      el("printView").hidden = true; wrap.hidden = true; el("legalView").hidden = false;
+      var art = el(LEGAL[h]);
+      window.scrollTo(0, art.getBoundingClientRect().top + window.scrollY - 16);
+      var hd = art.querySelector("h2"); if (hd) hd.focus({ preventScroll: true });
+    } else if (!el("legalView").hidden) {
+      el("legalView").hidden = true; wrap.hidden = false; window.scrollTo(0, legalBackY);
+    }
+  }
+  window.addEventListener("hashchange", route);
+  el("closeLegal").addEventListener("click", function () {
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (err) {}
+    if (location.hash) location.hash = "";
+    route();
+  });
+
+  window.addEventListener("beforeprint", renderPrint);
+  el("doPrint").addEventListener("click", function () { try { window.print(); } catch (err) {} });
+
+  /* backup: a small file the parent keeps; restore replaces what is on this phone */
+  function renderBackup() {
+    el("backupInfo").textContent = db.backupAt ? "גיבוי אחרון נשמר " + rel(db.backupAt) + "." : "עוד לא נשמר גיבוי בטלפון הזה.";
+  }
+  el("doBackup").addEventListener("click", function () {
+    db.backupAt = todayIso(); persist();
+    var blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "bis-rishon-backup-" + todayIso() + ".json";
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+    renderBackup(); toast("נוצר קובץ גיבוי");
+  });
+  var pendingRestore = null;
+  el("restoreFile").addEventListener("change", function () {
+    var f = el("restoreFile").files[0]; el("restoreFile").value = "";
+    if (!f) return;
+    if (f.size > 2 * 1024 * 1024) { toast("הקובץ גדול מדי לקובץ גיבוי של האתר"); return; }
+    var r = new FileReader();
+    r.onload = function () {
+      var d = null;
+      try { var j = JSON.parse(String(r.result)); if (j && j.app === "bis-rishon") d = normalize(j); } catch (err) {}
+      if (!d) { toast("הקובץ הזה לא נראה כמו קובץ גיבוי של האתר"); return; }
+      pendingRestore = d;
+      var n = 0; d.kids.forEach(function (k) { Object.keys(k.entries).forEach(function (x) { n += k.entries[x].length; }); });
+      var names = d.kids.map(function (k) { return k.child || "בלי שם"; }).join(", ");
+      el("restoreText").textContent = "בגיבוי יש " + n + " רישומים (" + names + "). השחזור יחליף את כל מה שרשום עכשיו בטלפון הזה. להמשיך?";
+      el("restoreConfirm").hidden = false; el("restoreNo").focus();
+    };
+    r.onerror = function () { toast("לא הצלחתי לקרוא את הקובץ"); };
+    r.readAsText(f);
+  });
+  el("restoreNo").addEventListener("click", function () { pendingRestore = null; el("restoreConfirm").hidden = true; });
+  el("restoreYes").addEventListener("click", function () {
+    if (!pendingRestore) return;
+    db = pendingRestore; db.example = false; pendingRestore = null; state = kidById(db.active);
+    persist(); el("restoreConfirm").hidden = true; query = ""; el("q").value = ""; renderAll(); toast("הגיבוי שוחזר");
+  });
+
+  /* install: on Android Chrome the browser can offer a one-tap install */
+  var installEvt = null;
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); installEvt = e; el("installBtn").hidden = false; });
+  el("installBtn").addEventListener("click", function () {
+    if (!installEvt) return;
+    installEvt.prompt(); installEvt = null; el("installBtn").hidden = true;
+  });
+
+  var tt;
+  function toast(msg) {
+    var t = el("toast"); t.textContent = msg; t.hidden = false;
+    clearTimeout(tt); tt = setTimeout(function () { t.hidden = true; }, 2200);
+  }
+
+  renderAll();
+  route();
+})();
+</script>
+
+</body>
+</html>
