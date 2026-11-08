@@ -1,5 +1,5 @@
 /* Keeps the site working without internet. Bump VERSION on every release. */
-const VERSION = "bis-rishon-v6";
+const VERSION = "bis-rishon-v11";
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png", "./fonts/fonts.css"];
 
 self.addEventListener("install", (e) => {
