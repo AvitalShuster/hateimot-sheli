@@ -6,8 +6,8 @@
 <title>הטעימות שלי: יומן מעקב טעימות לתינוק</title>
 <meta name="description" content="יומן מעקב טעימות לתינוק בעברית: מה נתת, מתי, כמה וכמה פעמים. בחינם, בלי הרשמה, הכול נשמר רק בטלפון שלך. מעקב בלבד, לא המלצה רפואית.">
 <link rel="canonical" href="https://avitalshuster.github.io/hateimot-sheli/">
-<meta name="theme-color" content="#f2f5ef" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#171b15" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F6EFE8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1B2333" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -29,7 +29,6 @@ if ("serviceWorker" in navigator) {
 }
 </script>
 <link rel="preload" href="fonts/assistant-hebrew-27533b.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/fredoka-hebrew-b09037.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* hebrew */
 @font-face {
@@ -87,57 +86,74 @@ if ("serviceWorker" in navigator) {
 }
 /* hebrew */
 @font-face {
-  font-family: 'Fredoka';
+  font-family: 'Playpen Sans Hebrew';
   font-style: normal;
-  font-weight: 600;
-  font-stretch: 100%;
+  font-weight: 500;
   font-display: swap;
-  src: url(fonts/fredoka-hebrew-b09037.woff2) format('woff2');
+  src: url(fonts/playpen-hebrew-15b02e.woff2) format('woff2');
   unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
 }
 /* latin */
 @font-face {
-  font-family: 'Fredoka';
+  font-family: 'Playpen Sans Hebrew';
   font-style: normal;
-  font-weight: 600;
-  font-stretch: 100%;
+  font-weight: 500;
   font-display: swap;
-  src: url(fonts/fredoka-latin-11adc6.woff2) format('woff2');
+  src: url(fonts/playpen-latin-7e9f23.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Playpen Sans Hebrew';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(fonts/playpen-hebrew-15b02e.woff2) format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin */
+@font-face {
+  font-family: 'Playpen Sans Hebrew';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(fonts/playpen-latin-7e9f23.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 </style>
 <style>
 /* Layout: one narrow column, like a page in a notebook on the fridge. Each food is a line with spoon-dots that fill up. */
 :root {
-  --ground: #f2f5ef;      /* sage mist */
-  --surface: #ffffff;
-  --ink: #23291f;
-  --muted: #5e6858;
-  --line: #dde5d6;
-  --grid: #b9c5af;        /* table lines that must show */
-  --spoon: #8fae7e;       /* pea green: a dot that got filled */
-  --spoon-empty: #dbe5d3;
-  --accent: #b9503a;      /* peach-coral: the one action */
+  --ground: #F6EFE8;      /* cream */
+  --surface: #FFFCF9;
+  --ink: #2B3F62;         /* ink blue: text and lines */
+  --muted: #5B6780;
+  --line: #EADFD6;
+  --grid: #D9C9BC;
+  --spoon: #D4A6A6;       /* antique pink: a dot that got filled */
+  --spoon-empty: #F2DEDA; /* light pink */
+  --accent: #9E3D4B;      /* raspberry: the one action */
   --accent-ink: #ffffff;
-  --flag: #94561c;        /* a reaction was noted */
-  --flag-bg: #f6e8dc;
+  --flag: #6B4F10;        /* a reaction was noted */
+  --flag-bg: #F3E3A8;     /* butter */
+  --blue: #B9C9DB;        /* dusty blue */
   --focus: #2457a8;
-  --font-display: "Fredoka", "Assistant", system-ui, sans-serif;
+  --font-display: "Playpen Sans Hebrew", "Assistant", system-ui, sans-serif;
   --font-text: "Assistant", system-ui, -apple-system, "Segoe UI", sans-serif;
   --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px;
   --r1: 6px; --r2: 12px; --r3: 20px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --ground: #171b15; --surface: #20261d; --ink: #eaf0e5; --muted: #a7b29f; --line: #343d2f; --grid: #56634d;
-    --spoon: #a3c290; --spoon-empty: #3a4534; --accent: #f09a7a; --accent-ink: #2a1610;
-    --flag: #e8a96a; --flag-bg: #3a2e22; --focus: #8fb4ff; color-scheme: dark;
+    --ground: #1B2333; --surface: #243049; --ink: #F6EFE8; --muted: #B9C2D3; --line: #34415C; --grid: #4A5873;
+    --spoon: #D4A6A6; --spoon-empty: #3A4660; --accent: #E8A0A9; --accent-ink: #2B1A1F;
+    --flag: #F3E3A8; --flag-bg: #4A4126; --blue: #3A4E6E; --focus: #8fb4ff; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --ground: #171b15; --surface: #20261d; --ink: #eaf0e5; --muted: #a7b29f; --line: #343d2f; --grid: #56634d;
-  --spoon: #a3c290; --spoon-empty: #3a4534; --accent: #f09a7a; --accent-ink: #2a1610;
-  --flag: #e8a96a; --flag-bg: #3a2e22; --focus: #8fb4ff; color-scheme: dark;
+  --ground: #1B2333; --surface: #243049; --ink: #F6EFE8; --muted: #B9C2D3; --line: #34415C; --grid: #4A5873;
+    --spoon: #D4A6A6; --spoon-empty: #3A4660; --accent: #E8A0A9; --accent-ink: #2B1A1F;
+    --flag: #F3E3A8; --flag-bg: #4A4126; --blue: #3A4E6E; --focus: #8fb4ff; color-scheme: dark;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -231,6 +247,28 @@ label.ghost:has(input:focus-visible) { outline: 3px solid var(--focus); outline-
 .lo-warn { background: var(--flag-bg); color: var(--ink); border-radius: var(--r1); padding: var(--s2) var(--s3); font-size: 15px; display: grid; gap: 4px; }
 .box .err { color: var(--flag); font-weight: 700; font-size: 15px; margin: 0; }
 .box h3 { font-size: 18px; }
+
+/* brand kit: hand-drawn stickers */
+.logo-sticker { width: 64px; height: 64px; transform: rotate(-8deg); flex: none; }
+.top { position: relative; }
+.decor { display: flex; justify-content: flex-end; gap: 4px; margin-bottom: calc(-1 * var(--s3)); pointer-events: none; }
+.decor img { width: 46px; height: auto; }
+.decor img:nth-child(1) { transform: rotate(-12deg); }
+.decor img:nth-child(2) { transform: rotate(10deg) translateY(10px); }
+.decor img:nth-child(3) { transform: rotate(-4deg); }
+.disclaimer { position: relative; border-inline-start: 1px solid var(--line); border-radius: var(--r2); padding-top: var(--s5); }
+.disclaimer::before { content: ""; position: absolute; top: -16px; left: 50%; width: 160px; height: 36px; margin-left: -80px; background: url(img/washi-tape.webp) center/contain no-repeat; transform: rotate(-3deg); }
+#startHint { border-style: solid; background: var(--flag-bg); border-color: transparent; align-items: center; flex-wrap: nowrap; }
+#startHint::before { content: ""; flex: none; width: 52px; height: 52px; background: url(img/avocado.webp) center/contain no-repeat; }
+.gate { position: relative; }
+.gate-decor { display: flex; justify-content: center; gap: var(--s3); }
+.gate-decor img { width: 58px; height: auto; }
+.gate-decor img:nth-child(odd) { transform: rotate(-10deg); }
+.gate-decor img:nth-child(even) { transform: rotate(8deg) translateY(8px); }
+.tab[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+.group h2, .coll .lbl, .sheet-head h2, legend, .legal h2, .pv-head h2 { letter-spacing: 0; }
+.coll .lbl { font-size: 21px; }
+.list, .meals, .box, .tbl-wrap { border-radius: var(--r3); }
 
 /* example banner */
 .example {
@@ -376,7 +414,7 @@ dialog {
   background: var(--surface); color: var(--ink);
 }
 @media (min-width: 700px) { dialog { margin: auto; border-radius: var(--r3); } }
-dialog::backdrop { background: rgba(23, 27, 21, 0.45); }
+dialog::backdrop { background: rgba(43, 63, 98, 0.42); }
 dialog[open] { animation: up 220ms cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes up { from { transform: translateY(24px); opacity: 0.6; } to { transform: none; opacity: 1; } }
 .sheet { display: grid; gap: var(--s4); padding: var(--s5) max(var(--s5), env(safe-area-inset-left, 0px)) calc(var(--s5) + env(safe-area-inset-bottom, 0px)); }
@@ -417,6 +455,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
       </svg>
     <h1>הטעימות שלי</h1>
   </div>
+  <div class="gate-decor" aria-hidden="true"><img src="img/avocado.webp" alt="" width="160" height="161"><img src="img/peanut.webp" alt="" width="160" height="161"><img src="img/kiwi.webp" alt="" width="160" height="161"><img src="img/egg.webp" alt="" width="160" height="161"><img src="img/strawberry.webp" alt="" width="160" height="161"></div>
   <p>יומן מעקב טעימות לתינוק. האתר פתוח למי שקיבלה קוד כניסה.</p>
   <form id="gateForm" novalidate>
     <label for="gateCode">קוד כניסה</label>
@@ -434,6 +473,7 @@ legend { font-family: var(--font-display); font-weight: 600; font-size: 18px; pa
 <body>
 <div class="wrap" dir="rtl" lang="he" hidden>
   <header class="top">
+    <div class="decor" aria-hidden="true"><img src="img/peanut.webp" alt="" width="160" height="161"><img src="img/egg.webp" alt="" width="160" height="161"><img src="img/carrot.webp" alt="" width="160" height="161"></div>
     <div class="brand">
       <svg width="44" height="44" viewBox="110 70 300 380" aria-hidden="true">
         <g fill="var(--spoon)"><ellipse cx="190" cy="176" rx="60" ry="84"/><rect x="173" y="236" width="34" height="200" rx="17"/></g>

@@ -1,6 +1,6 @@
 /* Keeps the site working without internet. Bump VERSION on every release. */
-const VERSION = "hateimot-sheli-v21";
-const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png", "./fonts/fonts.css"];
+const VERSION = "hateimot-sheli-v22";
+const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png", "./fonts/fonts.css", "./img/avocado.webp", "./img/peanut.webp", "./img/egg.webp", "./img/carrot.webp", "./img/strawberry.webp", "./img/kiwi.webp", "./img/washi-tape.webp"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
