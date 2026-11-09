@@ -25,7 +25,14 @@
 <script>
 try { var t = localStorage.getItem("hateimot-sheli:theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {}
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).then(function (r) { r.update(); }).catch(function () {});
+  });
+  // when a new version takes over, show it right away (once)
+  var hadController = !!navigator.serviceWorker.controller, reloaded = false;
+  navigator.serviceWorker.addEventListener("controllerchange", function () {
+    if (hadController && !reloaded) { reloaded = true; location.reload(); }
+  });
 }
 </script>
 <link rel="preload" href="fonts/assistant-hebrew-27533b.woff2" as="font" type="font/woff2" crossorigin>

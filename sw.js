@@ -1,5 +1,5 @@
 /* Keeps the site working without internet. Bump VERSION on every release. */
-const VERSION = "hateimot-sheli-v22";
+const VERSION = "hateimot-sheli-v23";
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png", "./fonts/fonts.css", "./img/avocado.webp", "./img/peanut.webp", "./img/egg.webp", "./img/carrot.webp", "./img/strawberry.webp", "./img/kiwi.webp", "./img/washi-tape.webp"];
 
 self.addEventListener("install", (e) => {
@@ -14,7 +14,8 @@ self.addEventListener("fetch", (e) => {
   const url = new URL(req.url);
   // Pages: try the network first so updates arrive, fall back to the saved copy offline.
   if (req.mode === "navigate") {
-    e.respondWith(fetch(req).then((res) => {
+    // "no-cache": always ask the server whether the page changed (the browser may otherwise keep it for 10 minutes)
+    e.respondWith(fetch(req, { cache: "no-cache" }).then((res) => {
       const copy = res.clone(); caches.open(VERSION).then((c) => c.put("./index.html", copy)); return res;
     }).catch(() => caches.match("./index.html")));
     return;
